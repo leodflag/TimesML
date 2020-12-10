@@ -10,7 +10,7 @@ import TimeSeriesAnalysis.ProcessData as Data
 import TimeSeriesAnalysis.Model as model
 
 class TimeSeriesDataTestCase(unittest.TestCase):
-    def setUp(self):  # 每個測試運行前都會執行
+    def setUp(self):
         self.__split_ratio = 0.7
         self.__lags = 3
         df_data = pd.read_csv('test_data/TWD_unittest.csv', index_col='date')

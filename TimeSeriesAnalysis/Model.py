@@ -179,7 +179,6 @@ class AutoRegressive:
         """Return the mean square error predicted by the autoregressive model."""
         return self.__ar_mse
 
-    # 計算誤差值
     def __cal_deviation(self):
         """ Calculate the error between the current period and the previous period."""
         try:
@@ -189,7 +188,6 @@ class AutoRegressive:
         except ValueError as err:
             raise ValueError(err)
 
-    # 多維線性迴歸矩陣正規方程式
     def __cal_ar_normal_equation(self):
         """Multidimensional linear regression matrix normal equation."""
         leng = self.__lags + 1
@@ -207,7 +205,7 @@ class AutoRegressive:
                     A_matrix[i][j] = self.__ar_data['t-' + str(i)].sum()
                 else:
                     A_matrix[i][j] = (self.__ar_data['t-'+str(i)] * self.__ar_data['t-'+str(j)]).sum()
-        A_inv = numpy.linalg.inv(A_matrix)  # 計算反矩陣
+        A_inv = numpy.linalg.inv(A_matrix)
         coef_matrix = A_inv.dot(B_matrix)
         return coef_matrix
 
@@ -244,7 +242,6 @@ class AutoRegressive:
         self.__ar_deviation = self.__cal_deviation()
         self.__ar_coef_matrix = self.__cal_ar_normal_equation()
 
-    # 預測
     def predict(self, test_data: pandas.Series) -> list:
         """Use an autoregressive model to make predictions.
 
@@ -398,7 +395,6 @@ class MovingAverage:
         """Return the mean square error predicted by the moving average model."""
         return self.__ma_mse
 
-    # 多維線性迴歸矩陣正規方程式
     def __cal_ma_normal_equation(self):
         """Multidimensional linear regression matrix normal equation."""
         leng = self.__lags + 1
@@ -416,7 +412,7 @@ class MovingAverage:
                     A_matrix[i][j] = self.__ma_data['t-' + str(i)].sum()
                 else:
                     A_matrix[i][j] = (self.__ma_data['t-'+str(i)] * self.__ma_data['t-'+str(j)]).sum()
-        A_inv = numpy.linalg.inv(A_matrix)  # 計算反矩陣
+        A_inv = numpy.linalg.inv(A_matrix)
         coef_matrix = A_inv.dot(B_matrix)
         return coef_matrix
 
@@ -452,7 +448,6 @@ class MovingAverage:
         self.__ma_data = Data.create_ma_data(self.__data, self.__lags)
         self.__ma_coef_matrix = self.__cal_ma_normal_equation()
 
-    # 預測
     def predict(self, test_data):
         """Use a moving average model to make predictions.
 

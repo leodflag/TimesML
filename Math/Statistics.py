@@ -341,7 +341,6 @@ def mean(listA) -> float:
     except TypeError as err:
         raise TypeError(err)
 
-# 變異數
 def variance(listA) -> float:
     """Calculate the variance of all elements in a list.
 
@@ -385,7 +384,6 @@ def variance(listA) -> float:
     except TypeError as err:
         raise TypeError(err)
 
-# 標準差
 def standard_deviation(listA) -> float:
     """Calculate the standard deviation of all elements in a list.
 
@@ -429,7 +427,6 @@ def standard_deviation(listA) -> float:
     except TypeError as err:
         raise TypeError(err)
 
-# 共變異數
 def covariance(listA, listB) -> float:
     """Calculate the covariance of two lists of one-dimensional data.
 
@@ -479,7 +476,6 @@ def covariance(listA, listB) -> float:
     except TypeError as err:
         raise TypeError(err)
 
-# 變異係數
 def coefficient_of_variation(listA) -> float:
     """Calculate the coefficient of variation of all elements in a list.
 
@@ -519,7 +515,6 @@ def coefficient_of_variation(listA) -> float:
     except TypeError as err:
         raise TypeError(err)
 
-# 線性相關係數
 def correlation_coefficient(listA, listB) -> float:
     """Calculate the linear correlation coefficient  of two lists of one-dimensional data.
 
@@ -571,7 +566,6 @@ def correlation_coefficient(listA, listB) -> float:
     except TypeError as err:
         raise TypeError(err)
 
-#決定係數
 def coefficient_of_determination(listA, listB) -> float:
     """Calculate the coefficient of determination  of two lists of one-dimensional data.
 

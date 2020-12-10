@@ -113,7 +113,6 @@ class chart:
         self.__fontsize_x_y = fontsize_x_y
         self.__fontsize_x_y_label = fontsize_x_y_label
 
-    # 歷史股價資料
     def historocal_trend_line_chart(self, data, xlabel: str = 'date', ylabel: str = 'price'):
         """Draw historical trend line chart with time series data. The chart will be automatically saved in a folder named 
 'title_stock'. Refer to the constructor parameter 'title_stock'.
@@ -155,7 +154,7 @@ class chart:
                 plt.xlabel(xlabel, fontsize = self.__fontsize_x_y_label)
                 plt.ylabel(ylabel, fontsize = self.__fontsize_x_y_label)
                 plt.tick_params(axis = 'both', labelsize = self.__fontsize_x_y, color = 'green')
-                plt.xticks(rotation=20)  # x座標軸刻度旋轉20度
+                plt.xticks(rotation=20)
                 plt.plot(data)
                 if not os.path.isdir(self.__title_stock + '/'):
                     os.mkdir(self.__title_stock)
@@ -168,7 +167,6 @@ class chart:
         except TypeError as err:
             raise TypeError(err)
 
-    # 散佈圖 全資料 list
     def lag_plot(self, data: pandas.Series):
         """Scatter plot of lagging periods.
 
@@ -273,7 +271,6 @@ class chart:
         except AttributeError as err:
             raise AttributeError(err)
 
-    # 預測結果比較折線圖 list list
     def forecast_result_line_graph(self, test_data, prediction_data, model_name: str = "model"):
         """Forecast result graph.
 
@@ -320,7 +317,7 @@ class chart:
                     plt.plot(prediction_data, color="red", label="Predicted")
                     plt.xlabel("Date", fontsize=13)
                     plt.ylabel("Price", fontsize=13)
-                    plt.xticks(rotation=45)  # x座標軸刻度旋轉45度
+                    plt.xticks(rotation=45)
                     plt.tick_params(axis='both', labelsize=7)
                     plt.legend(loc='best')
                     if not os.path.isdir(self.__title_stock + '/'):

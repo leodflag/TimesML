@@ -56,7 +56,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from dateutil.parser import parse
 import Math.Statistics as Math
-# 讀檔
+
 def read_file(path: str, col_name: str='close') -> pandas.Series:
     """Read file to get time series data.
 
@@ -88,7 +88,7 @@ def read_file(path: str, col_name: str='close') -> pandas.Series:
 
     """
     try:
-        data = pandas.read_csv(path, index_col='date')  # 以日期為row索引值
+        data = pandas.read_csv(path, index_col='date')
         Data = data[col_name]
         return Data
     except (FileNotFoundError, ValueError) as err:
@@ -96,7 +96,6 @@ def read_file(path: str, col_name: str='close') -> pandas.Series:
     except KeyError as err:
         print("This file has not index value", err)
 
-# 從網頁取得資料並下載
 def get_data_yahoo(stock_id: str, start_period: str, end_period: str, file_format: str='csv', frequency: str = 'day') -> pandas.Series:
     """Crawl and archive the stock price data of finance.yahoo.com.
 
@@ -140,11 +139,11 @@ def get_data_yahoo(stock_id: str, start_period: str, end_period: str, file_forma
     """
     try:
         period1 = parse(start_period)
-        period2 = parse(end_period)  # 轉換成url接受的數值
+        period2 = parse(end_period)
         if(period1 > period2 or period1 == period2):
             raise ValueError("'start_period' must be earlier than 'end_period'")
 
-        freq = ''  # 判斷下載時的頻率
+        freq = ''
         if(frequency == 'monthly' or frequency == 'month'):
             freq = 'mo'
         elif (frequency == 'weekly' or frequency == 'week'):
@@ -153,11 +152,11 @@ def get_data_yahoo(stock_id: str, start_period: str, end_period: str, file_forma
             freq = 'd'
         else:
             freq = 'd'
-        # yahoo網址
+
         url = ("https://query1.finance.yahoo.com/v7/finance/chart/" + stock_id + "?period1=" + str(int(period1.timestamp())) +
                "&period2=" + str(int(period2.timestamp())) + "&interval=1" + freq + "&events=history")
-        req = requests.get(url)  # 用get送出請求取得這網址的資料
-        stock = json.loads(req.text)  # 將json處理成dict
+        req = requests.get(url)
+        stock = json.loads(req.text)
         if(stock['chart']['result'] == None):
             raise TypeError("Not found stock id")
         else:
@@ -178,7 +177,6 @@ def get_data_yahoo(stock_id: str, start_period: str, end_period: str, file_forma
     except requests.exceptions.ConnectionError as err:
         raise requests.exceptions.ConnectionError(err)
 
-# 存成csv檔
 def save_flie(data, path: str, stock_id: str = 'stock', file_format: str = 'csv'):
     """Save data as file.
 
@@ -225,7 +223,6 @@ def save_flie(data, path: str, stock_id: str = 'stock', file_format: str = 'csv'
     except (PermissionError, AttributeError, FileNotFoundError) as err:
         print(err)
 
-# 建立從1開始的順序list
 def create_sequence_list(data) -> list:
     """Create a sequence starting from 1.
 
@@ -264,7 +261,6 @@ def create_sequence_list(data) -> list:
     except :
         raise ValueError("'data' must be one-dimensional numerical list.")
 
-# list to dataframe
 def list_to_dataframe(data: list):
     """Convert the 'list' type of the one-dimensional list of values to the 'DataFrame' type.
 
@@ -326,7 +322,6 @@ def dataframe_to_list(data: pandas.Series):
     except:
         raise ValueError("The type of one-dimensional data must be 'pandas.Series', and the content is numeric data.")
 
-# 分開訓練集與測試集 (list也可)
 def split_data(data, ratio: float):
     """Split the data into two data sets according to the input ratio.
 
@@ -362,16 +357,15 @@ def split_data(data, ratio: float):
             raise ValueError("'ratio' must be between 0 and 1, excluding 0 and 1.")
         else:
             if(len(data) > 2):
-                num = int(len(data)*ratio)  # 0.7
-                train_data = data[:num]  # 取得num前的全部資料
-                test_data = data[-(len(data) - num):]  # 取後num項資料
+                num = int(len(data)*ratio)
+                train_data = data[:num]
+                test_data = data[-(len(data) - num):]
                 return train_data, test_data
             else:
                 raise ValueError("There are at least two numerical data in the list.")
     except TypeError as err:
         raise TypeError(err)
 
-# 建立AR(p)的資料集
 def create_ar_data(data: pandas.Series, lags: int = 1) -> pandas.DataFrame:
     """Create an autoregressive data set.
 
@@ -445,7 +439,6 @@ def create_ar_data(data: pandas.Series, lags: int = 1) -> pandas.DataFrame:
     except KeyError:
         raise KeyError("The'data' type is'pandas.DataFrame', please enter the correct key value.")
 
-# 建立MA(p)的資料集
 def create_ma_data(data: pandas.Series, lags: int = 1) -> pandas.DataFrame:
     """Create an moving average data set.
 
