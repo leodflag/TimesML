@@ -9,9 +9,6 @@ import numpy as np
 import Math.Statistics as Math
 
 class MathTestCase(unittest.TestCase):
-    """
-    docstring
-    """
     def setUp(self):
         self.__listA = [5, 9, 6, 7, 2, 2]
         self.__listB = [3, 6, 7, 2, 9, 5]

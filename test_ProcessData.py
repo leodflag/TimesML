@@ -10,12 +10,6 @@ import TimeSeriesAnalysis.ProcessData as Data
 import TimeSeriesAnalysis.Model as model
 
 class TimeSeriesDataTestCase(unittest.TestCase):
-
-    """
-
-    Unit test for processing time series data
-
-    """
     def setUp(self):  # 每個測試運行前都會執行
         self.__split_ratio = 0.7
         self.__lags = 3

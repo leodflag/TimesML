@@ -10,9 +10,6 @@ import TimeSeriesAnalysis.ProcessData as Data
 import TimeSeriesAnalysis.Model as model
 
 class ModelTestCase(unittest.TestCase):
-    """
-    docstring
-    """
     def setUp(self):
         self.__split_ratio = 0.7
         self.__lags = 3
