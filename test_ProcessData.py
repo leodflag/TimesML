@@ -17,7 +17,7 @@ class TimeSeriesDataTestCase(unittest.TestCase):
         self.__data = df_data['close']
         train, test = Data.split_data(self.__data, self.__split_ratio)
         self.__ar_model = model.AutoRegressive(3)
-        self.__ma_model = model.MovingAverage(2)
+        self.__ma_model = model.MovingAverage(3)
         self.__test = test
         self.__train = train
         self.__list_one_dim_data = [5, 9, 6, 7, 2, 3]
