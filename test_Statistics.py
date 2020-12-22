@@ -6,12 +6,13 @@
 import unittest
 import pandas as pd
 import numpy as np
-import Math.Statistics as Math
+import Math.Statistics_S as Math
 
 class MathTestCase(unittest.TestCase):
     def setUp(self):
         self.__listA = [5, 9, 6, 7, 2, 2]
         self.__listB = [3, 6, 7, 2, 9, 5]
+        self.__listC = [3.122, 6.145, 7.126, 2.125, 9.562, 5.123]
         self.__list_one_str = [3, 6, 7, '2', 9, 5]
         self.__list_two_dim = [[3, 6], [7, 2, 9, 5]]
         self.__list_empty = []
@@ -74,6 +75,29 @@ class MathTestCase(unittest.TestCase):
         self.assertRaises(ValueError, Math.div, self.__list_empty, self.__listA)
         self.assertRaises(ValueError, Math.div, self.__Str, self.__listA)
         self.assertRaises(TypeError, Math.div, self.__None, self.__listA)
+
+    def test_log(self):
+        result = [1.0986, 1.7918, 1.9459, 0.6931, 2.1972, 1.6094]
+        expected = Math.log(self.__listB)
+        expected_round = []
+        for i in range(len(expected)):
+            expected_round.append(round(expected[i], 4))
+        self.assertEqual(result, expected_round)
+        self.assertRaises(ValueError, Math.log,  self.__list_one_str)
+        self.assertRaises(ValueError, Math.log,  self.__list_two_dim)
+        self.assertRaises(ValueError, Math.log,  self.__list_empty)
+        self.assertRaises(ValueError, Math.log, self.__Str)
+        self.assertRaises(TypeError, Math.log, self.__None)
+
+    def test_round_list(self):
+        result = [3.12, 6.14, 7.13, 2.12, 9.56, 5.12]
+        expected = Math.round_list(self.__listC, 2)
+        self.assertEqual(result, expected)
+        self.assertRaises(ValueError, Math.round_list,  self.__list_one_str, 2)
+        self.assertRaises(ValueError, Math.round_list,  self.__list_two_dim, 2)
+        self.assertRaises(ValueError, Math.round_list,  self.__list_empty, 2)
+        self.assertRaises(ValueError, Math.round_list, self.__Str, 2)
+        self.assertRaises(TypeError, Math.round_list, self.__None, 2)
 
     def test_mean(self):
         result = 5.1667
@@ -146,7 +170,7 @@ class MathTestCase(unittest.TestCase):
         self.assertRaises(TypeError, Math.coefficient_of_determination, self.__None, self.__listA)
 
     def test_mean_square_error(self):
-        result = 97
+        result = 16.1667
         expected = round(Math.mean_square_error(self.__listA, self.__listB), 4)
         self.assertEqual(result, expected)
         self.assertRaises(ValueError, Math.mean_square_error, self.__listB, self.__list_two_dim)
@@ -154,6 +178,36 @@ class MathTestCase(unittest.TestCase):
         self.assertRaises(ValueError, Math.mean_square_error, self.__list_empty, self.__listA)
         self.assertRaises(ValueError, Math.mean_square_error, self.__Str, self.__listA)
         self.assertRaises(TypeError, Math.mean_square_error, self.__None, self.__listA)
+
+    def test_mean_absolute_error(self):
+        result = 3.5
+        expected = round(Math.mean_absolute_error(self.__listA, self.__listB), 4)
+        self.assertEqual(result, expected)
+        self.assertRaises(ValueError, Math.mean_absolute_error, self.__listB, self.__list_two_dim)
+        self.assertRaises(ValueError, Math.mean_absolute_error, self.__listB, self.__list_one_str)
+        self.assertRaises(ValueError, Math.mean_absolute_error, self.__list_empty, self.__listA)
+        self.assertRaises(ValueError, Math.mean_absolute_error, self.__Str, self.__listA)
+        self.assertRaises(TypeError, Math.mean_absolute_error, self.__None, self.__listA)
+
+    def test_root_mean_square_error(self):
+        result = 4.0208
+        expected = round(Math.root_mean_squard_error(self.__listA, self.__listB), 4)
+        self.assertEqual(result, expected)
+        self.assertRaises(ValueError, Math.root_mean_squard_error, self.__listB, self.__list_two_dim)
+        self.assertRaises(ValueError, Math.root_mean_squard_error, self.__listB, self.__list_one_str)
+        self.assertRaises(ValueError, Math.root_mean_squard_error, self.__list_empty, self.__listA)
+        self.assertRaises(ValueError, Math.root_mean_squard_error, self.__Str, self.__listA)
+        self.assertRaises(TypeError, Math.root_mean_squard_error, self.__None, self.__listA)
+
+    def test_normalized_mean_square_error(self):
+        result = 0.5744
+        expected = round(Math.normalized_mean_squard_error(self.__listA, self.__listB), 4)
+        self.assertEqual(result, expected)
+        self.assertRaises(ValueError, Math.normalized_mean_squard_error, self.__listB, self.__list_two_dim)
+        self.assertRaises(ValueError, Math.normalized_mean_squard_error, self.__listB, self.__list_one_str)
+        self.assertRaises(ValueError, Math.normalized_mean_squard_error, self.__list_empty, self.__listA)
+        self.assertRaises(ValueError, Math.normalized_mean_squard_error, self.__Str, self.__listA)
+        self.assertRaises(TypeError, Math.normalized_mean_squard_error, self.__None, self.__listA)
 
     def test_ACF(self):
         result = -0.3428

@@ -35,13 +35,11 @@ split_data(data, ratio: float)
 create_ar_data(data: pandas.Series, lags: int = 1) -> pandas.DataFrame
 	Create an autoregressive data set.
 
-create_ma_data(data: pandas.Series, lags: int = 1) -> pandas.DataFrame
-	Create an moving average data set.
+n_order_difference_data(data: pandas.Series, periods: int = 1, log: bool = False) -> pandas.Series:
+    Sequence of numbers after difference operation.
 
 Notes
 -----------
-The input data format of the functions'create_ar_data' and'create_ma_data' for creating module data sets must be'pandas.Series'.
-
 If the time series data type is a list, you can use the function "list_to_dataframe" of the module "TimeSeriesAnalysis.ProcessData" to convert the data type.
 
 """
@@ -55,7 +53,7 @@ import pandas
 import numpy as np
 import matplotlib.pyplot as plt
 from dateutil.parser import parse
-import Math.Statistics as Math
+import Math.Statistics_S as Math
 
 def read_file(path: str, col_name: str='close') -> pandas.Series:
     """Read file to get time series data.
@@ -167,11 +165,9 @@ def get_data_yahoo(stock_id: str, start_period: str, end_period: str, file_forma
                 os.mkdir(stock_id)
             if (file_format == 'csv' or file_format == 'CSV'):
                 stock_data.index = stock_data.index.set_names(['date'])
-                print(stock_data)
                 stock_data.to_csv(stock_id + '/'+stock_id +'_' + frequency + '.csv')
             elif (file_format == 'txt' or file_format == 'TXT'):
                 stock_data.index = stock_data.index.set_names(['date'])
-                print(stock_data)
                 stock_data.to_csv(stock_id + '/'+stock_id + '_' + frequency + '.txt')
             return stock_data
     except requests.exceptions.ConnectionError as err:
@@ -261,7 +257,7 @@ def create_sequence_list(data) -> list:
     except :
         raise ValueError("'data' must be one-dimensional numerical list.")
 
-def list_to_dataframe(data: list):
+def list_to_dataframe(data: list , index) -> pandas.DataFrame:
     """Convert the 'list' type of the one-dimensional list of values to the 'DataFrame' type.
 
     Parameters
@@ -269,24 +265,32 @@ def list_to_dataframe(data: list):
         data: list.
         One-dimensional numerical list. For example: [1,5,8,6,3].
 
+        index: pandas.Index, list ,ndarray, pandas.Series and pandas.DataFrame.
+        One-dimensional list.
+
     Returns
     ---------
-    list. The one-dimensional list of values to the 'DataFrame' type.
+    pandas.DataFrame. The one-dimensional list of values to the 'DataFrame' type.
 
     Error
     ---------
         ValueError: 'data' must be one-dimensional numerical list.
         Solution: 'data' contains a string or is two-dimensional list. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
 
+        ValueError: The two lists must be the same length.
+        Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
+
     """
     try:
-        index = create_sequence_list(data)
-        df_data = pandas.DataFrame(data, index = index)
-        return df_data
+        if (len(data) == len(index)):
+            df_data = pandas.DataFrame(data, index = index)
+            return df_data
+        else:
+            raise ValueError("The two lists must be the same length.")
     except :
         raise ValueError("'data' must be one-dimensional numerical list.")
 
-def dataframe_to_list(data: pandas.Series):
+def dataframe_to_list(data: pandas.Series) -> list:
     """Convert the 'pandas.Series' type of the one-dimensional list of values to the'list' type.
 
     Parameters
@@ -439,32 +443,26 @@ def create_ar_data(data: pandas.Series, lags: int = 1) -> pandas.DataFrame:
     except KeyError:
         raise KeyError("The'data' type is'pandas.DataFrame', please enter the correct key value.")
 
-def create_ma_data(data: pandas.Series, lags: int = 1) -> pandas.DataFrame:
-    """Create an moving average data set.
+def n_order_difference_data(data: pandas.Series, periods: int = 1, log: bool = False) -> pandas.Series:
+    """Sequence of numbers after difference operation.
 
-    The moving average data set created to facilitate the calculation of moving average, its type is'pandas.DataFrame'.
-    For example MA(1) data set:
-        date　　　　　　　　t-1　　t　　Xt
-        2020-09-30 23:00:00  0.21 -0.02  28.91
-        2020-10-01 23:00:00 -0.02  0.04  28.87
-        2020-10-04 23:00:00  0.04 -0.05  28.92
-        2020-10-06 13:56:21 -0.05  0.13  28.79
-        -------------------------------------------
-        't': Current time series data error
-        't-1': Previous time series data error
-        'Xt':  Current time series data
+    The difference between the current period and the lag period data is called the first-order difference. 
+    The difference the data a second time is called the second-order difference.
 
     Parameters
     ---------
         data: pandas.Series.
-        'data' is a one-dimensional numerical data of type'pandas.Series' taken from'pandas.DataFrame'.
+        'data' is a one-dimensional numerical data of type 'pandas.Series' taken from 'pandas.DataFrame'.
 
-        lags: int, default  = 1.
-        'lags' represents the number of lagging periods. The default value is 1, which means the data is 1 period behind.
+        periods: int , default =  1.
+        'periods' represents the number of lagging periods. The default value is 1, which means the data is 1 period behind.
+
+        log: bool, default  = False
+        Does the data need to be multiplied by the natural logarithm.
 
     Returns
     ---------
-    pandas.DataFrame. The moving average data set created to facilitate the calculation of moving average.
+    pandas.Series. Return the difference data.
 
     Error
     ---------
@@ -474,41 +472,35 @@ def create_ma_data(data: pandas.Series, lags: int = 1) -> pandas.DataFrame:
         ValueError: Check that the input list is a one-dimensional numerical data.
         Solution: 'data' is one-dimensional data and the type is'pandas.Series', but the content is not all numeric.
 
-        ValueError: 'lags' value must be a positive integer, and the condition is greater than 1 and less than the length minus 1 of the data.
+        ValueError: 'periods' value must be a positive integer, and the condition is greater than 1 and less than the length of the data.
         Solution: Check whether the parameter matches the 'ValueError' description, or use the default value.
 
         TypeError: object of type 'NoneType' has no len().
-        Solution:  Please do not enter 'None'.Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+        Solution:  Please do not enter 'None'.Check that the type of one-dimensional data must be 'pandas.Series', and the content is numeric data.
 
-        KeyError: The'data' type is'pandas.DataFrame', please enter the correct key value.
+        KeyError: The 'data' type is'pandas.DataFrame', please enter the correct key value.
         Solution: Use the correct key value to obtain data.
+
+    References
+    ---------
+    Stationarity and differencing: https://otexts.com/fpp2/stationarity.html
+    Time series analysis ppt: http://homepage.ntu.edu.tw/~sschen/Book/Slides/Ch2Basic.pdf
 
     """
     try:
-        type_data = str(type(data))
-        chack_data = Math.chack_list_all_num(data)
-        if(type_data != "<class 'pandas.core.series.Series'>"):
-            raise ValueError("The type of one-dimensional data must be 'pandas.Series', and the content is numeric data.")
-        if (chack_data == False):
-            raise ValueError("Check that the input list is a one-dimensional numerical data.")
-        if(lags >= 1 and type(lags) == int and lags < (len(data)-1)):
-            lags_label = []
-            ma_data = create_ar_data(data, lags + 1)
-            ma_t = ma_data['t-1'] - ma_data['t']
-            for i in range(1, lags+1):
-                ma_t_k = ma_data['t-'+str(i+1)] - ma_data['t-'+str(i)]
-                ma_t = pandas.concat([ma_t_k, ma_t], axis=1)
-            ma_t = pandas.concat([ma_t, ma_data['t']], axis=1)
-            for i in range(lags, 0, -1):
-                lags_label.append(('t-'+str(i)))
-            lags_label.append('t')
-            lags_label.append('Xt')
-            ma_t.columns = lags_label
-            return ma_t
+        if(periods >= 1 and type(periods) == int and periods < len(data)):
+            diff_data = []
+            ar_data = create_ar_data(data, periods)
+            if(log == True):
+                data_t_log = Math.log(ar_data['t'])
+                data_per_log = Math.log(ar_data['t-'+str(periods)])
+                diff_data = Math.sub(data_t_log, data_per_log)
+                diff_df = pandas.DataFrame(diff_data, index=ar_data['t'].index)
+            elif(log == False):
+                diff_data = Math.sub(ar_data['t'], ar_data['t-'+str(periods)])
+                diff_df = pandas.DataFrame(diff_data, index = ar_data['t'].index)
+            return diff_df[0]
         else:
-            raise ValueError("'lag' value must be a positive integer, and the condition is greater than 1 and less than the length minus 1 of the data.")
+            raise ValueError("'periods' value must be a positive integer, and the condition is greater than 1 and less than the length of the data.")
     except ValueError as err:
         raise ValueError(err)
-    except KeyError:
-        raise KeyError("The'data' type is'pandas.DataFrame', please enter the correct key value.")
-

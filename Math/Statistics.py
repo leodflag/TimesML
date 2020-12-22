@@ -25,6 +25,12 @@ mult(listA, listB) -> list
 div(listA, listB) -> list
 	Divide two lists element by element.
 
+log(listA) -> list:
+    Multiply all the numerical elements in the list by the natural logarithm.
+
+round_list(listA, ndigits: int) -> list:
+    Take all the values in the list to a few digits after the decimal point.
+
 mean(listA) -> float
 	Calculate arithmetic mean of numerical data in a list.
 
@@ -47,7 +53,16 @@ coefficient_of_determination(listA, listB) -> float
 	Calculate the coefficient of determination  of two lists of one-dimensional data.
 
 mean_square_error(target_list, predict_list) -> float
-	Calculate the mean square error  of two lists of one-dimensional data.
+	The regression index used to calculate the forecast error. Calculate the mean square error  of two lists of one-dimensional data.
+
+mean_absolute_error(target_list, predict_list) -> float:
+    The regression index used to calculate the forecast error. Calculate the mean absolute error(MAE) of two lists of one-dimensional data.
+
+root_mean_squard_error(target_list, predict_list) -> float:
+    The regression index used to calculate the forecast error. Calculate the root mean square error(RMSE) of two lists of one-dimensional data.
+
+normalized_mean_squard_error(target_list, predict_list) -> float:
+    The regression index used to calculate the forecast error. Calculate the normalized mean square error(NRMSE) of two lists of one-dimensional data.
 
 ACF(listA, listB) -> float
 	Calculate the autocorrelation coefficients of two lists of one-dimensional data.
@@ -59,7 +74,7 @@ Pay attention to the input data type of the function.
 Use the function "list_to_dataframe" or "dataframe_to_list" of the module "TimeSeriesAnalysis.ProcessData" to convert the data type.
 
 """
-
+import math
 import numpy as np
 import pandas as pd
 
@@ -296,6 +311,88 @@ def div(listA, listB) -> list:
                 raise ValueError("The two lists must be the same length.")
         else:
             raise ValueError("List content must be one numerical data: listA=",chack_A, "; listB=", chack_B)
+    except TypeError as err:
+        raise TypeError(err)
+
+def log(listA) -> list:
+    """Multiply all the numerical elements in the list by the natural logarithm.
+
+    Parameters
+    ---------
+        listA: list ,ndarray, pandas.Series and pandas.DataFrame.
+        One-dimensional numerical list.
+
+    Returns
+    ---------
+    list. Result of natural logarithm list.
+
+    Error
+    ---------
+        ValueError: List content must be one-dimensional numerical data: listA=",chack_A".
+        Solution: 'True': one-dimensional numerical list. For example:[1,5,8,6,3].    'False': two-dimensional lists, strings, and one-dimensional 
+        non-numerical lists.For example: [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_A' is'True', it means that 'listA' does not need to be 
+        changed; if it is'False', the input 'listA' is changed to a one-dimensional list of numerical data.
+
+        TypeError: object of type 'NoneType' has no len()
+        Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+
+    References
+    ---------
+    log: https://en.wikipedia.org/wiki/Natural_logarithm
+
+    """
+    try:
+        chack_A = chack_list_all_num(listA)
+        if(chack_A):
+            result_list = []
+            for i in range(len(listA)):
+                if (listA[i] > 0):
+                    result_list.append(math.log(listA[i]))
+                else:
+                    result_list.append(0)
+            return result_list
+        else:
+            raise ValueError("List content must be one numerical data: listA=",chack_A)
+    except TypeError as err:
+        raise TypeError(err)
+
+
+def round_list(listA, ndigits: int) -> list:
+    """Take all the values in the list to a few digits after the decimal point.
+
+    Parameters
+    ---------
+        listA : list ,ndarray, pandas.Series and pandas.DataFrame.
+        One-dimensional numerical list.
+
+        ndigits: int
+        A few digits after the decimal point.
+
+    Returns
+    ---------
+    list. Return a list of values with a few digits after the decimal point.
+
+    Error
+    ---------
+        ValueError: The list must be one-dimensional numerical data, and there is at least one numerical data in it.
+        Solution: The entered'listA' is an empty list. Please change to a one-dimensional list of numerical data.
+
+        ValueError: The list must be one-dimensional numerical data.
+        Solution: 'listA' contains a string or is two-dimensional list. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+
+        TypeError: object of type 'NoneType' has no len()
+        Solution: 'listA' is None. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+
+    """
+    try:
+        chack_A = chack_list_all_num(listA)
+        if(chack_A):
+            result_list = []
+            for i in range(len(listA)):
+                result_list.append(round(listA[i], ndigits))
+            return result_list
+        else:
+            raise ValueError("List content must be one numerical data: listA=",chack_A)
     except TypeError as err:
         raise TypeError(err)
 
@@ -611,11 +708,11 @@ def coefficient_of_determination(listA, listB) -> float:
         raise TypeError(err)
 
 def mean_square_error(target_list, predict_list) -> float:
-    """Calculate the mean square error  of two lists of one-dimensional data.
+    """Regression indicators for numerical prediction. Calculate the mean square error (MSE) of two lists of one-dimensional data.
 
     Mean square error: Measures the mean of the square of the difference between the predicted value and the 
     actual observed value. Algorithm: After subtracting the two lists, the resulting list is multiplied by itself, and finally 
-    all the values in the multiplied list are summed.
+    all the values in the multiplied list are summed, and finally divide by the total number of list elements.
 
     Parameters
     ---------
@@ -651,10 +748,142 @@ def mean_square_error(target_list, predict_list) -> float:
     try:
         err = sub(target_list, predict_list)
         mse = sum(mult(err, err))
-        return mse
+        return mse/len(target_list)
     except TypeError as err:
         raise TypeError(err)
 
+def mean_absolute_error(target_list, predict_list) -> float:
+    """Regression indicators for numerical prediction. Calculate the mean absolute error (MAE) of two lists of one-dimensional data.
+
+     Mean absolute error  can measure the error between actual observations and predicted values. The calculation method is to 
+     subtract the two lists, take the absolute value of each number and then add them all, and finally divide by the total number of list elements.
+
+    Parameters
+    ---------
+        target_list: list ,ndarray, pandas.Series and pandas.DataFrame.
+        One-dimensional numerical list.
+
+        predict_list: list ,ndarray, pandas.Series and pandas.DataFrame.
+        One-dimensional numerical list.
+
+    Returns
+    ---------
+    float. The root mean square error  of two lists of one-dimensional data.
+
+    Error
+    ---------
+        ValueError: The two lists must be the same length.
+        Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
+
+        ValueError: List content must be one-dimensional numerical data: listA=",chack_A, "; listB=", chack_B.
+        Solution: 'True': one-dimensional numerical list. For example:[1,5,8,6,3].    'False': two-dimensional lists, strings, and one-dimensional 
+        non-numerical lists.For example: [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_A' is'True', it means that 'listA' does not need to be 
+        changed; if it is'False', the input 'listA' is changed to a one-dimensional list of numerical data.ListB has the same judgment and processing 
+        method as listA.
+
+        TypeError: object of type 'NoneType' has no len()
+        Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+
+    References
+    ---------
+    MAE wiki :https://en.wikipedia.org/wiki/Mean_absolute_error
+
+    """
+    try:
+        mae = sum(np.abs(sub(target_list, predict_list)))
+        return mae/len(target_list)
+    except TypeError as err:
+        raise TypeError(err)
+
+def root_mean_squard_error(target_list, predict_list) -> float:
+    """Regression indicators for numerical prediction. Calculate the root mean square error (RMSE) of two lists of one-dimensional data.
+
+    Root mean square error  can measure the error between actual observations and predicted values. 
+    The calculation method is the square root of MSE.
+
+    Parameters
+    ---------
+        target_list: list ,ndarray, pandas.Series and pandas.DataFrame.
+        One-dimensional numerical list.
+
+        predict_list: list ,ndarray, pandas.Series and pandas.DataFrame.
+        One-dimensional numerical list.
+
+    Returns
+    ---------
+    float. The root mean square error  of two lists of one-dimensional data.
+
+    Error
+    ---------
+        ValueError: The two lists must be the same length.
+        Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
+
+        ValueError: List content must be one-dimensional numerical data: listA=",chack_A, "; listB=", chack_B.
+        Solution: 'True': one-dimensional numerical list. For example:[1,5,8,6,3].    'False': two-dimensional lists, strings, and one-dimensional 
+        non-numerical lists.For example: [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_A' is'True', it means that 'listA' does not need to be 
+        changed; if it is'False', the input 'listA' is changed to a one-dimensional list of numerical data.ListB has the same judgment and processing 
+        method as listA.
+
+        TypeError: object of type 'NoneType' has no len()
+        Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+
+    References
+    ---------
+    Root mean square  error(RMSE) wiki: https://en.wikipedia.org/wiki/Root-mean-square_deviation
+
+    """
+    try:
+        mse = mean_square_error(target_list, predict_list)
+        return mse**0.5
+    except TypeError as err:
+        raise TypeError(err)
+
+def normalized_mean_squard_error(target_list, predict_list) -> float:
+    """Regression indicators for numerical prediction. Calculate the normalized mean square error (NRMSE) of two lists of one-dimensional data.
+
+    NRMSE is a statistical value, and its method is to normalize RMSE. The normalization method used by this function is that 
+    the error between the maximum and minimum is used as the denominator, and RMSE is used as the numerator.
+
+    The value is between 0 and 1. The closer the NRMSE is to 0, the smaller the error between the two and 
+    the closer the model predicted value to the target value.
+
+    Parameters
+    ---------
+        target_list: list ,ndarray, pandas.Series and pandas.DataFrame.
+        One-dimensional numerical list.
+
+        predict_list: list ,ndarray, pandas.Series and pandas.DataFrame.
+        One-dimensional numerical list.
+
+    Returns
+    ---------
+    float. The normalized mean square error  of two lists of one-dimensional data.
+
+    Error
+    ---------
+        ValueError: The two lists must be the same length.
+        Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
+
+        ValueError: List content must be one-dimensional numerical data: listA=",chack_A, "; listB=", chack_B.
+        Solution: 'True': one-dimensional numerical list. For example:[1,5,8,6,3].    'False': two-dimensional lists, strings, and one-dimensional 
+        non-numerical lists.For example: [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_A' is'True', it means that 'listA' does not need to be 
+        changed; if it is'False', the input 'listA' is changed to a one-dimensional list of numerical data.ListB has the same judgment and processing 
+        method as listA.
+
+        TypeError: object of type 'NoneType' has no len()
+        Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+
+    References
+    ---------
+    Normalized mean square error (NRMSE) wiki: https://zh.wikipedia.org/wiki/%E6%AD%A3%E8%A6%8F%E5%8C%96%E6%96%B9%E5%9D%87%E6%A0%B9%E5%B7%AE
+    Normalized mean square error (NRMSE) function: https://www.marinedatascience.co/blog/2019/01/07/normalizing-the-rmse/
+
+    """
+    try:
+        rmse = root_mean_squard_error(target_list, predict_list)
+        return rmse/(max(predict_list) - min(predict_list))
+    except TypeError as err:
+        raise TypeError(err)
 
 def ACF(listA, listB) -> float:
     """Calculate the autocorrelation coefficients of two lists of one-dimensional data.
