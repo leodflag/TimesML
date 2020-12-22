@@ -1,7 +1,7 @@
 # TimesML
 ---
 ## About
-This package is used for time series data analysis. In the future, analysis methods such as statistical models and machine learning models will be incorporated so that users can easily use them.
+This package was developed for time series data analysis and machine learning tasks. The aim of TimesML is to provide high-level APIs that developers and data scientists can easily model their times series data. We plan to support more machine learning models in the future. Thank you for your support, please star⭐ this project if you like.
 
 ## List of module
 #### Math
@@ -9,47 +9,76 @@ This package is used for time series data analysis. In the future, analysis meth
 
     This module contains statistics calculation function.
 
+    ex. mean_square_error、coefficient_of_determination、
+        ACF
+
 #### TimeSeriesAnalysis
 * Chart
 
     Time series data related drawing function.
 
+    ex. statistics_infographic、ACF_chart、forecast_result_group_chart
+
 * Model
 
     This module contains time series models for forecasting.
+
+    ex. AutoRegressive、SimpleMovingAverage
 
 * ProcessData
 
     This module contains the access and processing methods of time series data.
 
+    ex. get_data_yahoo、n_order_difference_data、split_data
+
 
 ## Simple example
 ```js
-    import TimeSeriesAnalysis.ProcessData as Data
-    import TimeSeriesAnalysis.Chart as Chart
-    import TimeSeriesAnalysis.Model as model
-    import Math.Statistics as math
+import TimeSeriesAnalysis.ProcessData as Data
+import TimeSeriesAnalysis.Model as Model
+import TimeSeriesAnalysis.Chart as Chart
 
-    lags = 2
-    col_name = 'close'
-    file_path = 'test_data/TWD_unittest.csv'
-    stock_id = 'TWD'
+# setting parameters
+save_path = 'US'
+chart = Chart.chart('US')
 
-    # TimeSeriesAnalysis.ProcessData
-    data = Data.read_file(file_path, col_name)
-    train, test = Data.split_data(data, 0.7)
+# read data
+data = Data.read_file(path='test_data/g20_new_c.csv', col_name='US')
 
-    #TimeSeriesAnalysis.Chart
-    chart = Chart.chart(stock_id)
-    chart.historocal_trend_line_chart(data)
+# contains basic statistics: historocal trend line chart、lag plot、ACF chart. figure 1.
+chart.statistics_infographic(data, file_path=save_path, lags=20, xlabel='date', ylabel='population')
 
-    # TimeSeriesAnalysis.Model
-    model = model.AutoRegressive(lags)
-    model.fit(train)
-    model.predict(test)
-    print(model.mse)  # 0.12240460258063346
+# split data into training set and test set
+train, test = Data.split_data(data, ratio=0.7)
+
+# autoRegressive
+model = Model.AutoRegressive(lags=2)
+model.fit(train)
+model.predict(test, pure_test_set_predict=True)
+
+model1 = Model.AutoRegressive(lags=20)
+model1.fit(train)
+model1.predict(test,pure_test_set_predict= True)
+
+# Save data
+Data.save_flie(model1.test_predict, path=save_path, stock_id='US', file_format='csv')
+
+# Combine and compare the prediction results of the two models. figure 2.
+chart.forecast_result_group_chart(train, test, model, model1, file_path=save_path, 
+model_1_name='AR(2)', model_2_name='AR(20)', xlabel='date', ylabel='population')
+
+# simple moving average
+model2 = Model.SimpleMovingAverage(windows=5)
+model2.fit(data)
+
+# line chart to observe the average situation every five days. figure 3.
+chart.line_chart(data, model2.sma_result, chart_title='SMA(5)', file_path=save_path, xlabel='date', ylabel='price')
 ```
 ## Chart example
+#### Figure 1
 ![image](https://github.com/leodflag/TimesML/blob/master/TWD/Historocal_Trend_TWD.png)
-
+#### Figure 2
+![image](https://github.com/leodflag/TimesML/blob/master/TWD/Historocal_Trend_TWD.png)
+#### Figure 3
+![image](https://github.com/leodflag/TimesML/blob/master/TWD/Historocal_Trend_TWD.png)
 [TimesML (github)](https://github.com/leodflag/TimesML)

@@ -128,7 +128,7 @@ class TimeSeriesDataTestCase(unittest.TestCase):
     def test_ar_predict(self):
         result = [29.023252216901746, 29.15093198716034, 29.225612724895058]
         self.__ar_model.fit(self.__train)
-        self.__ar_model.predict(self.__test)
+        self.__ar_model.predict(self.__test, True)
         self.assertEqual(result, self.__ar_model.test_predict.tolist())
 
     def test_SimpleMovingAverage_sma_result(self):

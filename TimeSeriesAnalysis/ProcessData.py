@@ -14,7 +14,7 @@ Functions
 read_file(path: str, col_name: str='close') -> pandas.Series
 	Read file to get time series data.
 
-get_data_yahoo(stock_id: str, start_period: str, end_period: str, file_format: str='csv', frequency: str = 'day') -> pandas.Series
+get_data_yahoo(stock_id: str, start_period: str, end_period: str, file_format: str='csv', frequency: str = 'day')
 	Crawl and archive the stock price data of finance.yahoo.com.
 
 save_flie(data, path: str, stock_id: str = 'stock', file_format: str = 'csv')
@@ -94,7 +94,7 @@ def read_file(path: str, col_name: str='close') -> pandas.Series:
     except KeyError as err:
         print("This file has not index value", err)
 
-def get_data_yahoo(stock_id: str, start_period: str, end_period: str, file_format: str='csv', frequency: str = 'day') -> pandas.Series:
+def get_data_yahoo(stock_id: str, start_period: str, end_period: str, file_format: str='csv', frequency: str = 'day'):
     """Crawl and archive the stock price data of finance.yahoo.com.
 
     This function can crawl the stock market price data at a specified time and frequency and save it as a csv or txt file, and the returned 
@@ -121,7 +121,7 @@ def get_data_yahoo(stock_id: str, start_period: str, end_period: str, file_forma
 
     Returns
     ---------
-    pandas.Series. Return a list with date as the column index value, the stock market price data type is float.
+    No return.
 
     Error
     ---------
@@ -169,7 +169,6 @@ def get_data_yahoo(stock_id: str, start_period: str, end_period: str, file_forma
             elif (file_format == 'txt' or file_format == 'TXT'):
                 stock_data.index = stock_data.index.set_names(['date'])
                 stock_data.to_csv(stock_id + '/'+stock_id + '_' + frequency + '.txt')
-            return stock_data
     except requests.exceptions.ConnectionError as err:
         raise requests.exceptions.ConnectionError(err)
 

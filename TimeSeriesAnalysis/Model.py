@@ -44,7 +44,6 @@ It is recommended to use the function of'ProcessData' to obtain and process time
 import pandas
 import numpy
 import TimeSeriesAnalysis.ProcessData as Data
-import TimeSeriesAnalysis.Chart as Chart
 import Math.Statistics as Math
 
 class AutoRegressive:
