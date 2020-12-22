@@ -76,9 +76,9 @@ chart.line_chart(data, model2.sma_result, chart_title='SMA(5)', file_path=save_p
 ```
 ## Chart example
 #### Figure 1
-![image](https://github.com/leodflag/TimesML/blob/master/TWD/Historocal_Trend_TWD.png)
+![image](https://github.com/leodflag/TimesML/blob/master/US/statistics_infographic_US.png)
 #### Figure 2
-![image](https://github.com/leodflag/TimesML/blob/master/TWD/Historocal_Trend_TWD.png)
+![image](https://github.com/leodflag/TimesML/blob/master/US/forecast_result_group_chart_US.png)
 #### Figure 3
-![image](https://github.com/leodflag/TimesML/blob/master/TWD/Historocal_Trend_TWD.png)
+![image](https://github.com/leodflag/TimesML/blob/master/US/SMA(5)_US_line_chart.png)
 [TimesML (github)](https://github.com/leodflag/TimesML)
