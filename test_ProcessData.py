@@ -6,9 +6,9 @@
 import unittest
 import pandas as pd
 import numpy as np
-import Math.Statistics_S as Math
-import TimeSeriesAnalysis.ProcessData_p as Data
-import TimeSeriesAnalysis.Model_l as model
+import Math.Statistics as Math
+import TimeSeriesAnalysis.ProcessData as Data
+import TimeSeriesAnalysis.Model as model
 
 class TimeSeriesDataTestCase(unittest.TestCase):
 

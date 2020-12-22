@@ -45,7 +45,7 @@ import pandas
 import numpy
 import TimeSeriesAnalysis.ProcessData as Data
 import TimeSeriesAnalysis.Chart as Chart
-import Math.Statistics_S as Math
+import Math.Statistics as Math
 
 class AutoRegressive:
 

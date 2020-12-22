@@ -53,7 +53,7 @@ import pandas
 import numpy as np
 import matplotlib.pyplot as plt
 from dateutil.parser import parse
-import Math.Statistics_S as Math
+import Math.Statistics as Math
 
 def read_file(path: str, col_name: str='close') -> pandas.Series:
     """Read file to get time series data.

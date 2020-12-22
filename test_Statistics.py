@@ -6,7 +6,7 @@
 import unittest
 import pandas as pd
 import numpy as np
-import Math.Statistics_S as Math
+import Math.Statistics as Math
 
 class MathTestCase(unittest.TestCase):
     def setUp(self):
