@@ -87,5 +87,6 @@ chart.line_chart(data, model2.sma_result, chart_title='SMA(5)', file_path=save_p
 
 #### Figure 3: chart.line_chart
 ![image](https://github.com/leodflag/TimesML/blob/master/US/SMA(5)_US_line_chart.png)
-[TimesML (github)](https://github.com/leodflag/TimesML)
     line chart to observe the average situation every five days.
+
+[TimesML (github)](https://github.com/leodflag/TimesML)
