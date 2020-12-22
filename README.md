@@ -75,10 +75,17 @@ model2.fit(data)
 chart.line_chart(data, model2.sma_result, chart_title='SMA(5)', file_path=save_path, xlabel='date', ylabel='price')
 ```
 ## Chart example
-#### Figure 1
+#### Figure 1: chart.statistics_infographic
 ![image](https://github.com/leodflag/TimesML/blob/master/US/statistics_infographic_US.png)
-#### Figure 2
+    historocal trend line chart(Draw historical trend line chart with time series data.)、
+    lag plot(Scatter plot of lagging periods.)、
+    ACF chart( Autocorrelation coefficient chart.).
+
+#### Figure 2: chart.forecast_result_group_chart
 ![image](https://github.com/leodflag/TimesML/blob/master/US/forecast_result_group_chart_US.png)
-#### Figure 3
+    Combine and compare the prediction results of the two models.
+
+#### Figure 3: chart.line_chart
 ![image](https://github.com/leodflag/TimesML/blob/master/US/SMA(5)_US_line_chart.png)
 [TimesML (github)](https://github.com/leodflag/TimesML)
+    line chart to observe the average situation every five days.
