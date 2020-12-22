@@ -50,6 +50,6 @@ This package is used for time series data analysis. In the future, analysis meth
     print(model.mse)  # 0.12240460258063346
 ```
 ## Chart example
-![image]()
+![image](https://github.com/leodflag/TimesML/blob/master/TWD/Historocal_Trend_TWD.png)
 
-[TimesML (github)]()
+[TimesML (github)](https://github.com/leodflag/TimesML)
