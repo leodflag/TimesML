@@ -84,7 +84,7 @@ model3 = Model.SimpleMovingAverage(windows=5)
 model3.fit(data)
 
 # line chart to observe the average situation every five days. figure 3.
-chart.line_chart(data, model3.sma_result, chart_title='SMA(5)', file_path=save_path, xlabel='date', ylabel='price')
+chart.line_chart(data, model3.sma_result, chart_title='SMA(5)', file_path=save_path, xlabel='date', ylabel='population')
 ```
 ## Chart example
 Describe the diagram drawn by the simple example

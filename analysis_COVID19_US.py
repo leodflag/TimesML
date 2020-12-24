@@ -27,7 +27,7 @@ model2.fit(train)
 model2.predict(test,pure_test_set_predict= True)
 
 # Save the data predicted by model1 using the test set
-Data.save_flie(model1.test_predict, path=save_path, stock_id='US', file_format='txt')
+Data.save_flie(model1.test_predict, path=save_path, stock_id='US', file_format='csv')
 
 # Combine and compare the prediction results of the two models. figure 2.
 chart.forecast_result_group_chart(train, test, model1, model2, file_path=save_path, 
@@ -38,4 +38,4 @@ model3 = Model.SimpleMovingAverage(windows=5)
 model3.fit(data)
 
 # line chart to observe the average situation every five days. figure 3.
-chart.line_chart(data, model3.sma_result, chart_title='SMA(5)', file_path=save_path, xlabel='date', ylabel='price')
+chart.line_chart(data, model3.sma_result, chart_title='SMA(5)', file_path=save_path, xlabel='date', ylabel='population')
