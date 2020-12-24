@@ -126,7 +126,7 @@ class AutoRegressive:
             Return the results predicted by the autoregressive model using the testing set.
 
         train_error -> list
-            Return the regression index used to calculate the training prediction error. The order is [mse, mae, rmse, nrmse.
+            Return the regression index used to calculate the training prediction error. The order is [mse, mae, rmse, nrmse].
 
         test_error -> list
             Return the regression index used to calculate the testing prediction error. The order is [mse, mae, rmse, nrmse].
@@ -181,7 +181,7 @@ class AutoRegressive:
         self.__ar_train_r_2 = 0
         self.__ar_test_data = []
         self.__ar_test_predict = []
-        self.__ar_test_error = [0,0,0,0]
+        self.__ar_test_error = [0, 0, 0, 0]  # mse  mae rmse nrmse
         self.__ar_test_r_2 = 0
 
     @property

@@ -97,10 +97,10 @@ class chart:
             Return correlation coefficient.
 
         forecast_result_group_model1_evaluation-> dict
-            Return model1 mse、rmse、nrmse.
+            Return model1 mse、mae、rmse、nrmse.
 
-        forecast_result_group_model1_evaluation -> dict
-            Return model1 mse、rmse、nrmse.
+        forecast_result_group_model2_evaluation -> dict
+            Return model2 mse、mae、rmse、nrmse.
 
         n_order_difference_graph(self, data, file_path: str, periods: str = 'First', log: bool = False, xlabel: str = 'date')
             Draw n-order difference graph with time series data.
@@ -175,13 +175,13 @@ class chart:
 
     @property
     def forecast_result_group_model1_evaluation(self) -> dict:
-        """Return model1 mse、rmse、nrmse."""
+        """Return model1 mse、mae、rmse、nrmse."""
         dic_forecast = {'mse': self.__model1_result[0], 'mae': self.__model1_result[1],  'rmse': self.__model1_result[2], 'nrmse': self.__model1_result[3]}
         return dic_forecast
 
     @property
     def forecast_result_group_model2_evaluation(self) -> dict:
-        """Return model2 mse、rmse、nrmse."""
+        """Return model2 mse、mae、rmse、nrmse."""
         dic_forecast = {'mse': self.__model2_result[0], 'mae': self.__model2_result[1], 'rmse': self.__model2_result[2],  'nrmse': self.__model2_result[3]}
         return dic_forecast
 
