@@ -376,7 +376,7 @@ class AutoRegressive:
             self.__ar_test_error[1] = Math.mean_absolute_error(test_data, self.__ar_test_predict['t'])
             self.__ar_test_error[2] = Math.root_mean_squard_error(test_data, self.__ar_test_predict['t'])
             self.__ar_test_error[3] = Math.normalized_mean_squard_error(test_data, self.__ar_test_predict['t'])
-            self.__ar_test_r_2 = Math.coefficient_of_determination(test_data[self.__lags:], self.__ar_test_predict['t'])
+            self.__ar_test_r_2 = Math.coefficient_of_determination(test_data, self.__ar_test_predict['t'])
 
 class SimpleMovingAverage:
 
