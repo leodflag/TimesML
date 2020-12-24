@@ -7,7 +7,7 @@ save_path = 'US'
 chart = Chart.chart('US')
 
 # read data
-data = Data.read_file(path='g20_new_c.csv', col_name='US')
+data = Data.read_file(path='test_data/g20_new_c.csv', col_name='US')
 
 # contains basic statistics: historocal trend line chart、lag plot、ACF chart. figure 1.
 chart.statistics_infographic(data, file_path=save_path, lags=20, xlabel='date', ylabel='population')
