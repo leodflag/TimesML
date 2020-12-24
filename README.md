@@ -41,6 +41,8 @@ pip install TimesML
 Please download the file 'g20_new_c.csv'  first for the following simple example.
 https://github.com/leodflag/TimesML/tree/master/test_data
 
+Pay attention to the file path,'g20_new_c.csv' should belong to the same file level as the simple example program.
+
 ## Simple example
 ```js
 import TimeSeriesAnalysis.ProcessData as Data
