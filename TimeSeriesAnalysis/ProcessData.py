@@ -210,10 +210,10 @@ def save_flie(data, path: str, stock_id: str = 'stock', file_format: str = 'csv'
     """
     try:
         if(file_format == 'csv' or file_format == 'CSV'):
-            data.to_csv(path + stock_id + '.csv')
+            data.to_csv(path + '/' + stock_id + '.csv')
             print('Saved successfully  (csv)')
         if (file_format == 'txt' or file_format == 'TXT'):
-            data.to_csv(path + stock_id + '.txt')
+            data.to_csv(path + '/'+stock_id + '.txt')
             print('Saved successfully (txt)')
     except (PermissionError, AttributeError, FileNotFoundError) as err:
         print(err)

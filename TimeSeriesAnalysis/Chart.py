@@ -81,8 +81,8 @@ class chart:
         __fontsize_x_y_label: int, default = 11
         The font size of the chart's x-axis and y-axis names.
 
-        self.__data_lag_R: list, default = [0,0]
-        The list contains correlation coefficient and coefficient of determination.
+        self.__data_lag_R: float, default = 0
+        The list contains correlation coefficient.
 
         self.__model1_result: list, default = [0,0,0, 0]
         The list contains mean_square_error、mean_absolute_error、root_mean_squard_error and normalized_mean_squard_error.
@@ -93,8 +93,8 @@ class chart:
     Methods
     ---------
 
-        lag_plot_R_R_square -> dict
-            Return correlation coefficient and coefficient of determination.
+        lag_plot_R -> dict
+            Return correlation coefficient.
 
         forecast_result_group_model1_evaluation-> dict
             Return model1 mse、rmse、nrmse.
@@ -163,14 +163,14 @@ class chart:
         self.__fontsize_title = fontsize_title
         self.__fontsize_x_y = fontsize_x_y
         self.__fontsize_x_y_label = fontsize_x_y_label
-        self.__data_lag_R = [0,0]
-        self.__model1_result = [0,0,0, 0]
-        self.__model2_result = [0, 0, 0, 0]
+        self.__data_lag_R = 0
+        self.__model1_result = [0,0,0, 0, 0]
+        self.__model2_result = [0, 0, 0, 0, 0]
 
     @property
-    def lag_plot_R_R_square(self) -> dict:
-        """Return correlation coefficient and coefficient of determination."""
-        dic_lag = {'R': self.__data_lag_R[0], 'R_square': self.__data_lag_R[1]}
+    def lag_plot_R(self) -> dict:
+        """Return correlation coefficient."""
+        dic_lag = {'R': self.__data_lag_R}
         return dic_lag
 
     @property
@@ -409,14 +409,12 @@ class chart:
             lags_data = Data.create_ar_data(data)
             x_site = min(lags_data['t'])
             y_site = min(lags_data['t-1'])
-            self.__data_lag_R[0] = round(Math.correlation_coefficient(lags_data['t'], lags_data['t-1']), 4)
-            self.__data_lag_R[1] = round(Math.coefficient_of_determination(lags_data['t'], lags_data['t-1']), 4)
+            self.__data_lag_R = round(Math.correlation_coefficient(lags_data['t'], lags_data['t-1']), 4)
             plt.title("Lag Plot : "+self.__title_times_data, fontsize=self.__fontsize_title)
             plt.xlabel("y(t)", fontsize=self.__fontsize_x_y_label)
             plt.ylabel("y(t-1)", fontsize=self.__fontsize_x_y_label)
             plt.tick_params(axis='both', labelsize=self.__fontsize_x_y)
-            plt.text(x_site, y_site, r'$\mathrm{r} = $' + str(self.__data_lag_R[0]) + '\n' +
-                                                          r'$\mathrm{r}^{2} = $' + str(self.__data_lag_R[1]),
+            plt.text(x_site, y_site, r'$\mathrm{r} = $' + str(self.__data_lag_R),
                      bbox=dict( boxstyle="square", ec=(1., 0.5, 0.5), fc=(1., 0.9, 0.9), ), fontsize=self.__fontsize_x_y_label)
             plt.scatter(lags_data['t'], lags_data['t-1'], s = 10)
             plt.tight_layout()
@@ -674,8 +672,7 @@ class chart:
                     # lag_plot
                     x_site = min(ar_data['t'])
                     y_site = min(ar_data['t-1'])
-                    self.__data_lag_R[0] = round(Math.correlation_coefficient(ar_data['t'], ar_data['t-1']), 4)
-                    self.__data_lag_R[1] = round(Math.coefficient_of_determination(ar_data['t'], ar_data['t-1']), 4)
+                    self.__data_lag_R = round(Math.correlation_coefficient(ar_data['t'], ar_data['t-1']), 4)
 
                     # ACF_chart
                     acf = []
@@ -701,8 +698,7 @@ class chart:
                     plt.xlabel("y(t)", fontsize=self.__fontsize_x_y_label)
                     plt.ylabel("y(t-1)", fontsize=self.__fontsize_x_y_label)
                     plt.tick_params(axis='both', labelsize=self.__fontsize_x_y)
-                    plt.text(x_site, y_site, r'$\mathrm{r} = $' + str(self.__data_lag_R[0]) + '\n' +
-                                        r'$\mathrm{r}^{2} = $' + str(self.__data_lag_R[1]),
+                    plt.text(x_site, y_site, r'$\mathrm{r} = $' + str(self.__data_lag_R),
                             bbox=dict(boxstyle="square",
                                                 ec=(1., 0.5, 0.5),
                                                 fc=(1., 0.9, 0.9),

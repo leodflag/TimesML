@@ -131,6 +131,12 @@ class AutoRegressive:
         test_error -> list
             Return the regression index used to calculate the testing prediction error. The order is [mse, mae, rmse, nrmse].
 
+        ar_train_r_2 -> float
+            Return train coefficient of determination .
+
+        ar_test_r_2 -> float
+            Return test coefficient of determination .
+
         fit(train_data: pandas.Series)
             Fit autoregression model.
 
@@ -172,9 +178,11 @@ class AutoRegressive:
         self.__ar_coef_matrix = []
         self.__ar_train_predict = []
         self.__ar_train_error = [0,0,0,0] # mse  mae rmse nrmse
+        self.__ar_train_r_2 = 0
         self.__ar_test_data = []
         self.__ar_test_predict = []
         self.__ar_test_error = [0,0,0,0]
+        self.__ar_test_r_2 = 0
 
     @property
     def lags(self) -> int:
@@ -216,6 +224,16 @@ class AutoRegressive:
         """Return the regression index used to calculate the testing prediction error. The order is [mse, mae, rmse, nrmse]."""
         return self.__ar_test_error
 
+    @property
+    def ar_train_r_2(self) -> float:
+        """Return train coefficient of determination ."""
+        return self.__ar_train_r_2
+
+    @property
+    def ar_test_r_2(self) -> float:
+        """Return test coefficient of determination ."""
+        return self.__ar_test_r_2
+
     def __cal_ar_normal_equation(self):
         """Multidimensional linear regression matrix normal equation."""
         leng = self.__lags + 1
@@ -250,6 +268,7 @@ class AutoRegressive:
         self.__ar_train_error[1] = Math.mean_absolute_error(self.__ar_lags_data['t'], self.__ar_train_predict['t'])
         self.__ar_train_error[2] = Math.root_mean_squard_error(self.__ar_lags_data['t'], self.__ar_train_predict['t'])
         self.__ar_train_error[3] = Math.normalized_mean_squard_error(self.__ar_lags_data['t'], self.__ar_train_predict['t'])
+        self.__ar_train_r_2 = Math.coefficient_of_determination(self.__ar_lags_data['t'], self.__ar_train_predict['t'])
 
     def fit(self, train_data: pandas.Series):
         """Fit autoregression model.
@@ -335,6 +354,7 @@ class AutoRegressive:
             self.__ar_test_error[1] = Math.mean_absolute_error(test_data[self.__lags:], self.__ar_test_predict['t'])
             self.__ar_test_error[2] = Math.root_mean_squard_error(test_data[self.__lags:], self.__ar_test_predict['t'])
             self.__ar_test_error[3] = Math.normalized_mean_squard_error(test_data[self.__lags:], self.__ar_test_predict['t'])
+            self.__ar_test_r_2 = Math.coefficient_of_determination(test_data[self.__lags:], self.__ar_test_predict['t'])
         elif(pure_test_set_predict == False):
             predict = Data.dataframe_to_list(self.__ar_lags_data['t'][-self.__lags:])
             for day in range(len(test_data)):
@@ -350,6 +370,7 @@ class AutoRegressive:
             self.__ar_test_error[1] = Math.mean_absolute_error(test_data, self.__ar_test_predict['t'])
             self.__ar_test_error[2] = Math.root_mean_squard_error(test_data, self.__ar_test_predict['t'])
             self.__ar_test_error[3] = Math.normalized_mean_squard_error(test_data, self.__ar_test_predict['t'])
+            self.__ar_test_r_2 = Math.coefficient_of_determination(test_data[self.__lags:], self.__ar_test_predict['t'])
 
 class SimpleMovingAverage:
 
