@@ -105,6 +105,12 @@ class AutoRegressive:
         __ar_test_error: float
         The mean square error predicted by the autoregressive model. The order is [mse, mae, rmse, nrmse].
 
+        __ar_train_r_2 : float
+        The train coefficient of determination .
+
+        __ar_test_r_2 : float
+        The test coefficient of determination .
+
     Methods
     ---------
         lags -> int
