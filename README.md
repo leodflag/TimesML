@@ -78,11 +78,11 @@ chart.forecast_result_group_chart(train, test, model1, model2, file_path=save_pa
 model_1_name='AR(2)', model_2_name='AR(20)', xlabel='date', ylabel='population')
 
 # simple moving average. five days as a unit to calculate the average
-model2 = Model.SimpleMovingAverage(windows=5)
-model2.fit(data)
+model3 = Model.SimpleMovingAverage(windows=5)
+model3.fit(data)
 
 # line chart to observe the average situation every five days. figure 3.
-chart.line_chart(data, model2.sma_result, chart_title='SMA(5)', file_path=save_path, xlabel='date', ylabel='price')
+chart.line_chart(data, model3.sma_result, chart_title='SMA(5)', file_path=save_path, xlabel='date', ylabel='price')
 ```
 ## Chart example
 Describe the diagram drawn by the simple example

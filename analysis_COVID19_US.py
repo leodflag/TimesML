@@ -27,7 +27,7 @@ model2.fit(train)
 model2.predict(test,pure_test_set_predict= True)
 
 # Save the data predicted by model1 using the test set
-Data.save_flie(model1.test_predict, path=save_path, stock_id='US', file_format='csv')
+Data.save_flie(model1.test_predict, path=save_path, stock_id='US', file_format='txt')
 
 # Combine and compare the prediction results of the two models. figure 2.
 chart.forecast_result_group_chart(train, test, model1, model2, file_path=save_path, 

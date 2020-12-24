@@ -21,7 +21,7 @@ model1.predict(test, pure_test_set_predict=True)
 model2 = Model.AutoRegressive(lags=20)
 model2.fit(train)
 model2.predict(test,pure_test_set_predict= True)
-Data.save_flie(model1.test_predict, path=save_path, stock_id='2033.TW', file_format='csv')
+Data.save_flie(model1.test_predict, path=save_path, stock_id='AAPL', file_format='csv')
 
 chart.forecast_result_group_chart(train, test, model1, model2, file_path=save_path, 
 model_1_name='AR(2)', model_2_name='AR(20)', xlabel='date', ylabel='price')
