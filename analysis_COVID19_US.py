@@ -24,7 +24,7 @@ model1.predict(test, pure_test_set_predict=True)
 # autoregressive lag periods :20
 model2 = Model.AutoRegressive(lags=20)
 model2.fit(train)
-model2.predict(test,pure_test_set_predict= True)
+model2.predict(test,pure_test_set_predict= False)
 
 # Save the data predicted by model1 using the test set
 Data.save_flie(model1.test_predict, path=save_path, stock_id='US', file_format='csv')

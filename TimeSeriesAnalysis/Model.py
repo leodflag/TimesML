@@ -274,7 +274,7 @@ class AutoRegressive:
         self.__ar_train_error[1] = Math.mean_absolute_error(self.__ar_lags_data['t'], self.__ar_train_predict['t'])
         self.__ar_train_error[2] = Math.root_mean_squard_error(self.__ar_lags_data['t'], self.__ar_train_predict['t'])
         self.__ar_train_error[3] = Math.normalized_mean_squard_error(self.__ar_lags_data['t'], self.__ar_train_predict['t'])
-        self.__ar_train_r_2 = Math.coefficient_of_determination(self.__ar_lags_data['t'], self.__ar_train_predict['t'])
+        self.__ar_train_r_2 = Math.coefficient_of_determination(self.__data, self.__ar_lags_data['t'], self.__ar_train_predict['t'])
 
     def fit(self, train_data: pandas.Series):
         """Fit autoregression model.
@@ -360,7 +360,7 @@ class AutoRegressive:
             self.__ar_test_error[1] = Math.mean_absolute_error(test_data[self.__lags:], self.__ar_test_predict['t'])
             self.__ar_test_error[2] = Math.root_mean_squard_error(test_data[self.__lags:], self.__ar_test_predict['t'])
             self.__ar_test_error[3] = Math.normalized_mean_squard_error(test_data[self.__lags:], self.__ar_test_predict['t'])
-            self.__ar_test_r_2 = Math.coefficient_of_determination(test_data[self.__lags:], self.__ar_test_predict['t'])
+            self.__ar_test_r_2 = Math.coefficient_of_determination(self.__data, test_data[self.__lags:], self.__ar_test_predict['t'])
         elif(pure_test_set_predict == False):
             predict = Data.dataframe_to_list(self.__ar_lags_data['t'][-self.__lags:])
             for day in range(len(test_data)):
@@ -376,7 +376,7 @@ class AutoRegressive:
             self.__ar_test_error[1] = Math.mean_absolute_error(test_data, self.__ar_test_predict['t'])
             self.__ar_test_error[2] = Math.root_mean_squard_error(test_data, self.__ar_test_predict['t'])
             self.__ar_test_error[3] = Math.normalized_mean_squard_error(test_data, self.__ar_test_predict['t'])
-            self.__ar_test_r_2 = Math.coefficient_of_determination(test_data, self.__ar_test_predict['t'])
+            self.__ar_test_r_2 = Math.coefficient_of_determination(self.__data, test_data, self.__ar_test_predict['t'])
 
 class SimpleMovingAverage:
 

@@ -166,9 +166,11 @@ def get_data_yahoo(stock_id: str, start_period: str, end_period: str, file_forma
             if (file_format == 'csv' or file_format == 'CSV'):
                 stock_data.index = stock_data.index.set_names(['date'])
                 stock_data.to_csv(stock_id + '/'+stock_id +'_' + frequency + '.csv')
+                print('Saved successfully (get data yahoo). File path = '+ stock_id + '/'+stock_id + '_' + frequency + '.csv')
             elif (file_format == 'txt' or file_format == 'TXT'):
                 stock_data.index = stock_data.index.set_names(['date'])
                 stock_data.to_csv(stock_id + '/'+stock_id + '_' + frequency + '.txt')
+                print('Saved successfully (get data yahoo). File path = '+ stock_id + '/'+stock_id + '_' + frequency + '.txt')
     except requests.exceptions.ConnectionError as err:
         raise requests.exceptions.ConnectionError(err)
 

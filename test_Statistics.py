@@ -160,14 +160,17 @@ class MathTestCase(unittest.TestCase):
         self.assertRaises(TypeError, Math.correlation_coefficient, self.__None, self.__listA)
 
     def test_coefficient_of_determination(self):
-        result = 0.1175
-        expected = round(Math.coefficient_of_determination(self.__listA, self.__listB), 4)
+        train = [2,2,3,5,6,7]
+        test = [6, 7 ]
+        predict = [5, 5]
+        result = 0.5610
+        expected = round(Math.coefficient_of_determination(train, test, predict), 4)
         self.assertEqual(result, expected)
-        self.assertRaises(ValueError, Math.coefficient_of_determination, self.__listB, self.__list_two_dim)
-        self.assertRaises(ValueError, Math.coefficient_of_determination, self.__listB, self.__list_one_str)
-        self.assertRaises(ValueError, Math.coefficient_of_determination, self.__list_empty, self.__listA)
-        self.assertRaises(ValueError, Math.coefficient_of_determination, self.__Str, self.__listA)
-        self.assertRaises(TypeError, Math.coefficient_of_determination, self.__None, self.__listA)
+        self.assertRaises(ValueError, Math.coefficient_of_determination, train, self.__listB, self.__list_two_dim)
+        self.assertRaises(ValueError, Math.coefficient_of_determination, train, self.__listB, self.__list_one_str)
+        self.assertRaises(ValueError, Math.coefficient_of_determination, train, self.__list_empty, self.__listA)
+        self.assertRaises(ValueError, Math.coefficient_of_determination, train, self.__Str, self.__listA)
+        self.assertRaises(TypeError, Math.coefficient_of_determination, train, self.__None, self.__listA)
 
     def test_mean_square_error(self):
         result = 16.1667

@@ -663,7 +663,7 @@ def correlation_coefficient(listA, listB) -> float:
     except TypeError as err:
         raise TypeError(err)
 
-def coefficient_of_determination(listA, listB) -> float:
+def coefficient_of_determination(train_target, target_list, predict_list) -> float:
     """Calculate the coefficient of determination  of two lists of one-dimensional data.
 
     Coefficient of determination: Explainable variation / total variation. A measure of how much proportional 
@@ -672,10 +672,10 @@ def coefficient_of_determination(listA, listB) -> float:
 
     Parameters
     ---------
-        listA : list ,ndarray, pandas.Series and pandas.DataFrame.
+        target_list : list ,ndarray, pandas.Series and pandas.DataFrame.
         One-dimensional numerical list.
 
-        listB : list ,ndarray, pandas.Series and pandas.DataFrame.
+        predict_list : list ,ndarray, pandas.Series and pandas.DataFrame.
         One-dimensional numerical list.
 
     Returns
@@ -687,11 +687,12 @@ def coefficient_of_determination(listA, listB) -> float:
         ValueError: The two lists must be the same length.
         Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
 
-        ValueError: List content must be one-dimensional numerical data: listA=",chack_A, "; listB=", chack_B.
+        ValueError: List content must be one-dimensional numerical data: train_target=",chack_train_target, "; target_list=", chack_target_list,  
+        "; predict_list=", chack_predict_list.
         Solution: 'True': one-dimensional numerical list. For example:[1,5,8,6,3].    'False': two-dimensional lists, strings, and one-dimensional 
-        non-numerical lists.For example: [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_A' is'True', it means that 'listA' does not need to be 
-        changed; if it is'False', the input 'listA' is changed to a one-dimensional list of numerical data.ListB has the same judgment and processing 
-        method as listA.
+        non-numerical lists.For example: [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_train_target' is'True', it means that 'train_target' does not need to be 
+        changed; if it is'False', the input 'train_target' is changed to a one-dimensional list of numerical data. 'target_list' and 'predict_list' have the same judgment and processing 
+        method as 'train_target'.
 
         TypeError: object of type 'NoneType' has no len()
         Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
@@ -702,8 +703,23 @@ def coefficient_of_determination(listA, listB) -> float:
 
     """
     try:
-        R = correlation_coefficient(listA, listB)
-        return R**2
+        chack_train_target = chack_list_all_num(train_target)
+        chack_target_list = chack_list_all_num(target_list)
+        chack_predict_list = chack_list_all_num(predict_list)
+        if (chack_train_target and chack_target_list and chack_predict_list):
+            if(len(target_list) == len(predict_list)):
+                train_target_mean = sum(train_target)/len(train_target)
+                sst=0.0
+                for i in range( len(target_list)):
+                    sst=sst+(target_list[i]-train_target_mean)**2
+                sst = sst / len(target_list)
+                sse = mean_square_error(target_list, predict_list)
+                return 1- (sse/sst)
+            else:
+                raise ValueError("The two lists must be the same length.")
+        else:
+            raise ValueError("List content must be one numerical data: train_target=",chack_train_target, "; target_list=", chack_target_list,  
+                             "; predict_list=", chack_predict_list)
     except TypeError as err:
         raise TypeError(err)
 
@@ -881,7 +897,7 @@ def normalized_mean_squard_error(target_list, predict_list) -> float:
     """
     try:
         rmse = root_mean_squard_error(target_list, predict_list)
-        return rmse/(max(predict_list) - min(predict_list))
+        return rmse/(max(target_list) - min(target_list))
     except TypeError as err:
         raise TypeError(err)
 
