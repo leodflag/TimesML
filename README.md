@@ -105,5 +105,13 @@ Describe the diagram drawn by the simple example
 ## TimesML (github)
 https://github.com/leodflag/TimesML
 
+## References
+
+*  Test data set : g20_new_c.csv
+	* Dong E, Du H, Gardner L. An interactive web-based dashboard to track COVID-19 in real time. Lancet Inf Dis. 20(5):533-534. doi: 10.1016/S1473-3099(20)30120-1
+* Use requests crawl yahoo finance stock price
+    * FinLab. 超簡單台股每日爬蟲教學. Retrieved July 22, 2020, from https://www.finlab.tw/超簡單台股每日爬蟲教學 
+
+
 ## MIT License
 
