@@ -3,6 +3,12 @@
 ## About
 This package was developed for time series data analysis and machine learning tasks. The aim of TimesML is to provide high-level APIs that developers and data scientists can easily model their times series data. We plan to support more machine learning models in the future. Thank you for your support, please star⭐ this project if you like.
 
+## TimesML (github)
+https://github.com/leodflag/TimesML
+
+## TimesML (PyPI)
+https://pypi.org/project/TimesML/
+
 ## PypI
 https://pypi.org/project/TimesML
 ```js
@@ -86,24 +92,6 @@ model3.fit(data)
 # line chart to observe the average situation every five days. figure 3.
 chart.line_chart(data, model3.sma_result, chart_title='SMA(5)', file_path=save_path, xlabel='date', ylabel='population')
 ```
-## Chart example
-Describe the diagram drawn by the simple example
-#### Figure 1: chart.statistics_infographic
-![image](https://github.com/leodflag/TimesML/blob/master/US/statistics_infographic_US.png)
-    historocal trend line chart(Draw historical trend line chart with time series data.)、
-    lag plot(Scatter plot of lagging periods.)、
-    ACF chart( Autocorrelation coefficient chart.).
-
-#### Figure 2: chart.forecast_result_group_chart
-![image](https://github.com/leodflag/TimesML/blob/master/US/forecast_result_group_chart_US.png)
-    Combine and compare the prediction results of the two models.
-
-#### Figure 3: chart.line_chart
-![image](https://github.com/leodflag/TimesML/blob/master/US/SMA(5)_US_line_chart.png)
-    line chart to observe the average situation every five days.
-
-## TimesML (github)
-https://github.com/leodflag/TimesML
 
 ## References
 
@@ -111,7 +99,6 @@ https://github.com/leodflag/TimesML
 	* Dong E, Du H, Gardner L. An interactive web-based dashboard to track COVID-19 in real time. Lancet Inf Dis. 20(5):533-534. doi: 10.1016/S1473-3099(20)30120-1
 * Use requests crawl yahoo finance stock price
     * FinLab. 超簡單台股每日爬蟲教學. Retrieved July 22, 2020, from https://www.finlab.tw/超簡單台股每日爬蟲教學 
-
 
 ## MIT License
 

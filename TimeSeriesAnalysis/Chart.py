@@ -9,12 +9,13 @@ The drawing function of this module enables time series data to be presented in 
 chart and automatically saved under the folder name entered when creating the category.
 
 Class
----------
+------------------
 chart
     When creating objects of this category, you can define content settings such as chart title, font, and chart size.
 
+
 Methods
----------
+------------------
 historocal_trend_line_chart(self, data, file_path: str, xlabel: str = 'date', ylabel: str = 'price')
     Draw historical trend line chart with time series data. After the drawing is completed, it will be saved to the specified path 'file_path'.
 
@@ -40,7 +41,7 @@ forecast_result_group_chart(self,train, test, model_1: Model, model_2: Model, fi
     Combine and compare the prediction results of the two models.
 
 Notes
------------
+--------------------
 Pay attention to the input data type of the function.
 
 Use the function "list_to_dataframe" or "dataframe_to_list" of the module "TimeSeriesAnalysis.ProcessData" to convert the data type.
@@ -60,38 +61,30 @@ class chart:
     """Time series chart.
 
     Parameters
-    ---------
-        title_times_data: string, default = 'times_data'
-        Titles of all time series charts.
+    ------------------
+        title_times_data: string, default = 'times_data'. Titles of all time series charts.
 
     Attributes
-    ---------
-        __figsize_length: int, default = 9
-        The length of the chart.
+    ------------------
+    
+        __figsize_length: int, default = 9. The length of the chart.
 
-        __figsize_width: int, default = 6
-        The width of the chart.
+        __figsize_width: int, default = 6. The width of the chart.
 
-        __fontsize_title: int, default = 15
-        Font size of chart title.
+        __fontsize_title: int, default = 15. Font size of chart title.
 
-        __fontsize_x_y: int, default = 8
-        The font size of the chart x-axis and y-axis scale.
+        __fontsize_x_y: int, default = 8. The font size of the chart x-axis and y-axis scale.
 
-        __fontsize_x_y_label: int, default = 11
-        The font size of the chart's x-axis and y-axis names.
+        __fontsize_x_y_label: int, default = 11. The font size of the chart's x-axis and y-axis names.
 
-        self.__data_lag_R: float, default = 0
-        The list contains correlation coefficient.
+        self.__data_lag_R: float, default = 0. The list contains correlation coefficient.
 
-        self.__model1_result: list, default = [0,0,0, 0]
-        The list contains mean_square_error、mean_absolute_error、root_mean_squard_error and normalized_mean_squard_error.
+        self.__model1_result: list, default = [0,0,0, 0]. The list contains mean_square_error、mean_absolute_error、root_mean_squard_error and normalized_mean_squard_error.
 
-        self.__model2_result: list, default = [0, 0, 0, 0]
-        The list contains mean_square_error、mean_absolute_error、root_mean_squard_error and normalized_mean_squard_error.
+        self.__model2_result: list, default = [0, 0, 0, 0]. The list contains mean_square_error、mean_absolute_error、root_mean_squard_error and normalized_mean_squard_error.
 
     Methods
-    ---------
+    ------------------
 
         lag_plot_R -> dict
             Return correlation coefficient.
@@ -130,29 +123,42 @@ class chart:
             Combine and compare the prediction results of the two models.
 
     Examples
-    ---------
+    ------------------
+     ::
+
+        import Math.Statistics as math
         import TimeSeriesAnalysis.ProcessData as Data
         import TimeSeriesAnalysis.Chart as Chart
-        import TimeSeriesAnalysis.Model as model
+        import TimeSeriesAnalysis.Model as Model
 
-        col_name = 'close'
-        file_path = 'Stock.csv'
-        times_data_id = 'Stock.TW'
-        save_path = 'Stock_file'
+        col_name = 'US'
+        file_path = 'test_data/g20_new_c.csv'
+        times_data_id = 'US'
+        save_path = 'US'
 
+        chart = Chart.chart(title_times_data=times_data_id)
         data = Data.read_file(file_path, col_name)
-
-        chart = Chart.chart(times_data_id)
-        chart.historocal_trend_line_chart(data, save_path)
-        chart.lag_plot(data, save_path)
-        chart.ACF_chart(data, save_path, 8)
-
         train, test = Data.split_data(data, 0.7)
-        model = model.AutoRegressive()
+
+        model = Model.AutoRegressive(lags=1)
         model.fit(train)
         model.predict(test)
 
-        chart.forecast_result_line_graph(model.test_data, model.prediction, save_path, 'AR')
+        model1 = Model.AutoRegressive(lags=20)
+        model1.fit(train)
+        model1.predict(test)
+
+        diff_data = Data.n_order_difference_data(test, periods=1, log=True)
+        chart.n_order_difference_graph(diff_data, file_path=save_path, periods='First', log= True)
+
+        chart.historocal_trend_line_chart(data, file_path=save_path, xlabel='date', ylabel='population')
+        chart.line_chart(data, test, chart_title='predict', file_path=save_path, xlabel ='date', ylabel ='population')
+        chart.lag_plot(data, file_path=save_path)
+        chart.ACF_chart(data, file_path=save_path, lags=12)
+        chart.forecast_result_chart_model(data, model1, file_path=save_path, model_name='AR(20)', xlabel='date', ylabel='population')
+        chart.forecast_result_chart_predict(model,save_path, model_name='AR(1)', xlabel='date', ylabel='population')
+        chart.statistics_infographic(data, file_path=save_path, lags=10, xlabel='date', ylabel='population')
+        chart.forecast_result_group_chart(train, test, model_1=model, model_2=model1, file_path=save_path, model_1_name='AR(1)', model_2_name='AR(20)', xlabel='date', ylabel='population')
 
     """
 
@@ -170,59 +176,52 @@ class chart:
     @property
     def lag_plot_R(self) -> dict:
         """Return correlation coefficient."""
-        dic_lag = {'R': self.__data_lag_R}
+        dic_lag = {'R', self.__data_lag_R}
         return dic_lag
 
     @property
     def forecast_result_group_model1_evaluation(self) -> dict:
         """Return model1 mse、mae、rmse、nrmse."""
-        dic_forecast = {'mse': self.__model1_result[0], 'mae': self.__model1_result[1],  'rmse': self.__model1_result[2], 'nrmse': self.__model1_result[3]}
+        dic_forecast = {'mse', self.__model1_result[0], 'mae', self.__model1_result[1],  'rmse', self.__model1_result[2], 'nrmse', self.__model1_result[3]}
         return dic_forecast
 
     @property
     def forecast_result_group_model2_evaluation(self) -> dict:
         """Return model2 mse、mae、rmse、nrmse."""
-        dic_forecast = {'mse': self.__model2_result[0], 'mae': self.__model2_result[1], 'rmse': self.__model2_result[2],  'nrmse': self.__model2_result[3]}
+        dic_forecast = {'mse', self.__model2_result[0], 'mae', self.__model2_result[1], 'rmse', self.__model2_result[2],  'nrmse', self.__model2_result[3]}
         return dic_forecast
 
     def n_order_difference_graph(self, data, file_path: str, periods: str = 'First', log: bool = False, xlabel: str = 'date'):
         """Draw n-order difference graph  with time series data.
 
-        For example: First-order difference graph or Second-order difference graph. After the drawing is completed, it will be saved to the specified path 'file_path'.
+        For example, First-order difference graph or Second-order difference graph. After the drawing is completed, it will be saved to the specified path 'file_path'.
 
         Parameters
-        ---------
-            data: list ,ndarray, pandas.Series and pandas.DataFrame.
-            One-dimensional numerical list.
+        ------------------
+            data: list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
-            file_path: string
-            Path to save image file.
+            file_path: string. Path to save image file.
 
-            periods: str, default  = 'First'
-            Differential period.
+            periods: str, default  = 'First'. Differential period.
 
-            log: bool, default  = False
-            The data multiplied by the natural logarithm. True or False.
+            log: bool, default  = False. The data multiplied by the natural logarithm. True or False.
 
-            xlabel: str, default  = 'date'
-            The name of the x-axis.
+            xlabel: str, default  = 'date'. The name of the x-axis.
 
         Returns
-        ---------
+        ------------------
         No return value.
 
         Error
-        ---------
-            ValueError: ('List content must be one numerical data: data=', False)
-            Solution: 'True': one-dimensional numerical list. For example:[1,5,8,6,3].    'False': two-dimensional lists, strings, and one-dimensional 
-            non-numerical lists.For example: [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_data' is'True', it means that 'data' does not need to be 
-            changed; if it is'False', the input 'data' is changed to a one-dimensional list of numerical data.
+        ------------------
+             | ValueError: ('List content must be one numerical data: data=', False)
+             | Solution: 'True', one-dimensional numerical list. For example,[1,5,8,6,3].    'False', two-dimensional lists, strings, and one-dimensional non-numerical lists.For example, [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_data' is'True', it means that 'data' does not need to be changed; if it is'False', the input 'data' is changed to a one-dimensional list of numerical data.
 
-            ValueError: The list must be one-dimensional numerical data, and there is at least one numerical data in it.
-            Solution: The entered'listA' is an empty list. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+             | ValueError: The list must be one-dimensional numerical data, and there is at least one numerical data in it.
+             | Solution: The entered'listA' is an empty list. Check that the input list is a one-dimensional list, for example, [1,5,8,6,3].
 
-            KeyError: "The'data' type is'pandas.DataFrame', please enter the correct key value."
-            Solution: Use the correct key value to obtain data.
+             | KeyError: "The'data' type is'pandas.DataFrame', please enter the correct key value."
+             | Solution: Use the correct key value to obtain data.
 
         """
         try:
@@ -253,35 +252,29 @@ class chart:
         it will be saved to the specified path 'file_path'.
 
         Parameters
-        ---------
-            data: list ,ndarray, pandas.Series and pandas.DataFrame.
-            One-dimensional numerical list.
+        ------------------
+            data: list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
-            file_path: string
-            Path to save image file.
+            file_path: string. Path to save image file.
 
-            xlabel: str, default  = 'date'
-            The name of the x-axis.
+            xlabel: str, default  = 'date'. The name of the x-axis.
 
-            ylabel: str, default  = 'price'
-            The name of the y-axis
+            ylabel: str, default  = 'price'. The name of the y-axis.
 
         Returns
-        ---------
+        ------------------
         No return value.
 
         Error
-        ---------
-            ValueError: ('List content must be one numerical data: data=', False)
-            Solution: 'True': one-dimensional numerical list. For example:[1,5,8,6,3].    'False': two-dimensional lists, strings, and one-dimensional 
-            non-numerical lists.For example: [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_data' is'True', it means that 'data' does not need to be 
-            changed; if it is'False', the input 'data' is changed to a one-dimensional list of numerical data.
+        ------------------
+             | ValueError: ('List content must be one numerical data: data=', False)
+             | Solution: 'True', one-dimensional numerical list. For example,[1,5,8,6,3].    'False', two-dimensional lists, strings, and one-dimensional non-numerical lists.For example, [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_data' is'True', it means that 'data' does not need to be changed; if it is'False', the input 'data' is changed to a one-dimensional list of numerical data.
 
-            ValueError: The list must be one-dimensional numerical data, and there is at least one numerical data in it.
-            Solution: The entered'listA' is an empty list. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+             | ValueError: The list must be one-dimensional numerical data, and there is at least one numerical data in it.
+             | Solution: The entered'listA' is an empty list. Check that the input list is a one-dimensional list, for example, [1,5,8,6,3].
 
-            KeyError: "The'data' type is'pandas.DataFrame', please enter the correct key value."
-            Solution: Use the correct key value to obtain data.
+             | KeyError: "The'data' type is'pandas.DataFrame', please enter the correct key value."
+             | Solution: Use the correct key value to obtain data.
 
         """
         try:
@@ -310,41 +303,33 @@ class chart:
         """Throw in two lists of one-dimensional numbers and draw a line chart, it will be saved to the specified path 'file_path'.
 
         Parameters
-        ---------
-            data: list ,ndarray, pandas.Series and pandas.DataFrame.
-            One-dimensional numerical list.
+        ------------------
+            data: list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
-            predict_data: list ,ndarray, pandas.Series and pandas.DataFrame.
-            One-dimensional numerical list.
+            predict_data: list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
-            chart_title: string
-            Chart title.
+            chart_title: string. Chart title.
 
-            file_path: string
-            Path to save image file.
+            file_path: string. Path to save image file.
 
-            xlabel: str, default  = 'date'
-            The name of the x-axis.
+            xlabel: str, default  = 'date'. The name of the x-axis.
 
-            ylabel: str, default  = 'price'
-            The name of the y-axis
+            ylabel: str, default  = 'price'. The name of the y-axis.
 
         Returns
-        ---------
+        ------------------
         No return value.
 
         Error
-        ---------
-            ValueError: ('List content must be one numerical data: data=', False)
-            Solution: 'True': one-dimensional numerical list. For example:[1,5,8,6,3].    'False': two-dimensional lists, strings, and one-dimensional 
-            non-numerical lists.For example: [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_data' is'True', it means that 'data' does not need to be 
-            changed; if it is'False', the input 'data' is changed to a one-dimensional list of numerical data.
+        ------------------
+             | ValueError: ('List content must be one numerical data: data=', False)
+             | Solution: 'True', one-dimensional numerical list. For example,[1,5,8,6,3].    'False', two-dimensional lists, strings, and one-dimensional non-numerical lists.For example, [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_data' is'True', it means that 'data' does not need to be changed; if it is'False', the input 'data' is changed to a one-dimensional list of numerical data.
 
-            ValueError: The list must be one-dimensional numerical data, and there is at least one numerical data in it.
-            Solution: The entered'listA' is an empty list. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+             | ValueError: The list must be one-dimensional numerical data, and there is at least one numerical data in it.
+             | Solution: The entered'listA' is an empty list. Check that the input list is a one-dimensional list, for example, [1,5,8,6,3].
 
-            KeyError: "The'data' type is'pandas.DataFrame', please enter the correct key value."
-            Solution: Use the correct key value to obtain data.
+             | KeyError: "The'data' type is'pandas.DataFrame', please enter the correct key value."
+             | Solution: Use the correct key value to obtain data.
 
         """
         try:
@@ -378,30 +363,28 @@ class chart:
         Current data is the x-axis, previous data is the y-axis.After the drawing is completed, it will be saved to the specified path 'file_path'.
 
         Parameters
-        ---------
-            data: pandas.Series.
-            'data' is a one-dimensional numerical time series data of type'pandas.Series' taken from'pandas.DataFrame'.
+        ------------------
+            data: pandas.Series. 'data' is a one-dimensional numerical time series data of type'pandas.Series' taken from'pandas.DataFrame'.
 
-            file_path: string
-            Path to save image file.
+            file_path: string. Path to save image file.
 
         Returns
-        ---------
+        ------------------
         No return value.
 
         Error
-        ---------
-            ValueError: The type of one-dimensional data must be 'pandas.Series', and the content is numeric data.
-            Solution: Check whether the parameter matches the 'ValueError' description, or use the default value.
+        ------------------
+             | ValueError: The type of one-dimensional data must be 'pandas.Series', and the content is numeric data.
+             | Solution: Check whether the parameter matches the 'ValueError' description, or use the default value.
 
-            ValueError: The list must be one-dimensional numerical data, and there is at least one numerical data in it.
-            Solution: The entered'data' is an empty list. Check that the type of one-dimensional data must be 'pandas.Series', and the content is numeric data.
+             | ValueError: The list must be one-dimensional numerical data, and there is at least one numerical data in it.
+             | Solution: The entered'data' is an empty list. Check that the type of one-dimensional data must be 'pandas.Series', and the content is numeric data.
 
-            ValueError: 'lags' value must be a positive integer, and the condition is greater than 1 and less than the length of the data.
-            Solution: Check whether the parameter matches the 'ValueError' description.
+             | ValueError: 'lags' value must be a positive integer, and the condition is greater than 1 and less than the length of the data.
+             | Solution: Check whether the parameter matches the 'ValueError' description.
 
-            TypeError: object of type 'NoneType' has no len().
-            Solution:  Please do not enter 'None'.Check that the type of one-dimensional data must be 'pandas.Series', and the content is numeric data.
+             | TypeError: object of type 'NoneType' has no len().
+             | Solution:  Please do not enter 'None'.Check that the type of one-dimensional data must be 'pandas.Series', and the content is numeric data.
 
         """
         try:
@@ -434,33 +417,30 @@ class chart:
         value,-1 is the maximum negative correlation value, and 0 is irrelevant. After the drawing is completed, it will be saved to the specified path 'file_path'.
 
         Parameters
-        ---------
-            data: pandas.Series
-            'data' is a one-dimensional numerical time series data of type'pandas.Series' taken from'pandas.DataFrame'.
+        ------------------
+            data: pandas.Series. 'data' is a one-dimensional numerical time series data of type'pandas.Series' taken from'pandas.DataFrame'.
 
-            file_path: string
-            Path to save image file.
+            file_path: string. Path to save image file.
 
-            lags: int, default  = 1
-            'lags' represents the number of lagging periods. The default value is 1, which means the data is 1 period behind.
+            lags: int, default  = 1. 'lags' represents the number of lagging periods. The default value is 1, which means the data is 1 period behind.
 
         Returns
-        ---------
+        ------------------
         No return value.
 
         Error
-        ---------
-            ValueError: The type of one-dimensional data must be 'pandas.Series', and the content is numeric data.
-            Solution: Check whether the parameter matches the 'ValueError' description, or use the default value.
+        ------------------
+             | ValueError: The type of one-dimensional data must be 'pandas.Series', and the content is numeric data.
+             | Solution: Check whether the parameter matches the 'ValueError' description, or use the default value.
 
-            ValueError: The list must be one-dimensional numerical data, and there is at least one numerical data in it.
-            Solution: The entered'data' is an empty list. Check that the type of one-dimensional data must be 'pandas.Series', and the content is numeric data.
+             | ValueError: The list must be one-dimensional numerical data, and there is at least one numerical data in it.
+             | Solution: The entered'data' is an empty list. Check that the type of one-dimensional data must be 'pandas.Series', and the content is numeric data.
 
-            ValueError: 'lags' value must be a positive integer, and the condition is greater than 1 and less than the length of the data.
-            Solution: Check whether the parameter matches the 'ValueError' description.
+             | ValueError: 'lags' value must be a positive integer, and the condition is greater than 1 and less than the length of the data.
+             | Solution: Check whether the parameter matches the 'ValueError' description.
 
-            TypeError: object of type 'NoneType' has no len().
-            Solution:  Please do not enter 'None'.Check that the type of one-dimensional data must be 'pandas.Series', and the content is numeric data.
+             | TypeError: object of type 'NoneType' has no len().
+             | Solution:  Please do not enter 'None'.Check that the type of one-dimensional data must be 'pandas.Series', and the content is numeric data.
 
         """
         try:
@@ -498,33 +478,27 @@ class chart:
         NRMSE, and finally saved in the folder.
 
         Parameters
-        ---------
-            data: list ,ndarray, pandas.Series and pandas.DataFrame.
-            One-dimensional numerical list.
+        ------------------
+            data: list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
-            model: Model
-            The object type is TimeSeriesAnalysis.Model.
+            model: Model. The object type is TimeSeriesAnalysis.Model.
 
-            file_path: string
-            Path to save image file.
+            file_path: string. Path to save image file.
 
-            model_name: str, default  = "model"
-            The name of the model.
+            model_name: str, default  = "model". The name of the model.
 
-            xlabel: str, default  = 'date'
-            The name of the x-axis.
+            xlabel: str, default  = 'date'. The name of the x-axis.
 
-            ylabel: str, default  = 'price'
-            The name of the y-axis
+            ylabel: str, default  = 'price'. The name of the y-axis.
 
         Returns
-        ---------
+        ------------------
         No return value.
 
         Error
-        ---------
-            TypeError: object of type 'NoneType' has no len().
-            Solution:  Please do not enter 'None'.Check that the type of one-dimensional data must be 'pandas.Series', and the content is numeric data.
+        ------------------
+             | TypeError: object of type 'NoneType' has no len().
+             | Solution:  Please do not enter 'None'.Check that the type of one-dimensional data must be 'pandas.Series', and the content is numeric data.
 
         """
         try:
@@ -565,33 +539,27 @@ class chart:
         Input test data and predicted results are drawn as a line graph for comparison.After the drawing is completed, it will be saved to the specified path 'file_path'.
 
         Parameters
-        ---------
-            model: Model
-            The object type is TimeSeriesAnalysis.Model.
+        ------------------
+            model: Model. The object type is TimeSeriesAnalysis.Model.
 
-            file_path: string
-            Path to save image file.
+            file_path: string. Path to save image file.
 
-            model_name: str, default   = "model"
-            The name of the time series model.
+            model_name: str, default   = "model". The name of the time series model.
 
         Returns
-        ---------
+        ------------------
         No return value.
 
         Error
-        ---------
-            ValueError: The two lists must be the same length.
-            Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
+        ------------------
+             | ValueError: The two lists must be the same length.
+             | Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
 
-            ValueError: List content must be one-dimensional numerical data:  test_data=", chack_test, "; predict_data=", chack_pre.
-            Solution: 'True': one-dimensional numerical list. For example:[1,5,8,6,3].    'False': two-dimensional lists, strings, and one-dimensional 
-            non-numerical lists.For example: [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_test' is'True', it means that 'test_data' does not need 
-            to be changed; if it is'False', the input 'test_data' is changed to a one-dimensional list of numerical data. predict_data has 
-            the same judgment and processing method as test_data.
+             | ValueError: List content must be one-dimensional numerical data:  test_data=", chack_test, "; predict_data=", chack_pre.
+             | Solution: 'True', one-dimensional numerical list. For example,[1,5,8,6,3].    'False', two-dimensional lists, strings, and one-dimensional non-numerical lists.For example, [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_test' is'True', it means that 'test_data' does not need to be changed; if it is'False', the input 'test_data' is changed to a one-dimensional list of numerical data. predict_data has the same judgment and processing method as test_data.
 
-            TypeError: object of type 'NoneType' has no len()
-            Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+             | TypeError: object of type 'NoneType' has no len()
+             | Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example, [1,5,8,6,3].
 
         """
         try:
@@ -623,42 +591,37 @@ class chart:
     def statistics_infographic(self, data: pandas.Series, file_path: str, lags: int = 1, xlabel: str = 'date', ylabel: str = 'price'):
         """Statistical graphs of time series data.
 
-    Three statistical graphs combined into one graph: historocal trend line chart、lag plot、ACF chart.
+        Three statistical graphs combined into one graph: historocal trend line chart、lag plot、ACF chart.
 
         Parameters
-        ---------
-            data: pandas.Series
-            'data' is a one-dimensional numerical time series data of type'pandas.Series' taken from'pandas.DataFrame'.
+        ------------------
+            data: pandas.Series. 'data' is a one-dimensional numerical time series data of type'pandas.Series' taken from'pandas.DataFrame'.
 
-            file_path: string
-            Path to save image file.
+            file_path: string. Path to save image file.
 
-            lags: int, default  = 1
-            'lags' represents the number of lagging periods. The default value is 1, which means the data is 1 period behind.
+            lags: int, default  = 1. 'lags' represents the number of lagging periods. The default value is 1, which means the data is 1 period behind.
 
-            xlabel: str, default  = 'date'
-            The name of the x-axis for historocal trend line chart.
+            xlabel: str, default  = 'date'. The name of the x-axis for historocal trend line chart.
 
-            ylabel: str, default  = 'price'
-            The name of the y-axis for historocal trend line chart.
+            ylabel: str, default  = 'price'. The name of the y-axis for historocal trend line chart.
 
         Returns
-        ---------
+        ------------------
         No return value.
 
         Error
-        ---------
-            ValueError: The type of one-dimensional data must be 'pandas.Series', and the content is numeric data.
-            Solution: Check whether the parameter matches the 'ValueError' description, or use the default value.
+        ------------------
+             | ValueError: The type of one-dimensional data must be 'pandas.Series', and the content is numeric data.
+             | Solution: Check whether the parameter matches the 'ValueError' description, or use the default value.
 
-            ValueError: The list must be one-dimensional numerical data, and there is at least one numerical data in it.
-            Solution: The entered'data' is an empty list. Check that the type of one-dimensional data must be 'pandas.Series', and the content is numeric data.
+             | ValueError: The list must be one-dimensional numerical data, and there is at least one numerical data in it.
+             | Solution: The entered'data' is an empty list. Check that the type of one-dimensional data must be 'pandas.Series', and the content is numeric data.
 
-            ValueError: 'lags' value must be a positive integer, and the condition is greater than 1 and less than the length of the data.
-            Solution: Check whether the parameter matches the 'ValueError' description.
+             | ValueError: 'lags' value must be a positive integer, and the condition is greater than 1 and less than the length of the data.
+             | Solution: Check whether the parameter matches the 'ValueError' description.
 
-            TypeError: object of type 'NoneType' has no len().
-            Solution:  Please do not enter 'None'.Check that the type of one-dimensional data must be 'pandas.Series', and the content is numeric data.
+             | TypeError: object of type 'NoneType' has no len().
+             | Solution:  Please do not enter 'None'.Check that the type of one-dimensional data must be 'pandas.Series', and the content is numeric data.
 
         """
         try:
@@ -736,48 +699,36 @@ class chart:
         the prediction results of the test sets of the two models, and the model measurement indicators, such as MSE, MAE, RMSE, NRMSE, finally saved in the folder.
 
         Parameters
-        ---------
-            train: pandas.Series
-            'train' is a one-dimensional numerical time series data of type'pandas.Series' taken from'pandas.DataFrame'.
+        ------------------
+            train: pandas.Series. 'train' is a one-dimensional numerical time series data of type'pandas.Series' taken from'pandas.DataFrame'.
 
-            test: pandas.Series
-            'test' is a one-dimensional numerical time series data of type'pandas.Series' taken from'pandas.DataFrame'.
+            test: pandas.Series. 'test' is a one-dimensional numerical time series data of type'pandas.Series' taken from'pandas.DataFrame'.
 
-            model_1: Model
-            The object type is TimeSeriesAnalysis.Model. The First model.
+            model_1: Model. The object type is TimeSeriesAnalysis.Model. The First model.
 
-            model_2: Model
-            The object type is TimeSeriesAnalysis.Model. The second model.
+            model_2: Model. The object type is TimeSeriesAnalysis.Model. The second model.
 
-            file_path: string
-            Path to save image file.
+            file_path: string. Path to save image file.
 
-            model_1_name: str, default  = "model1"
-            The name of the model_1.
+            model_1_name: str, default  = "model1". The name of the model_1.
 
-            model_2_name: str, default  = "model2"
-            The name of the model_2.
+            model_2_name: str, default  = "model2". The name of the model_2.
 
-            xlabel: str, default  = 'date'
-            The name of the x-axis.
+            xlabel: str, default  = 'date'. The name of the x-axis.
 
-            ylabel: str, default  = 'price'
-            The name of the y-axis
+            ylabel: str, default  = 'price'. The name of the y-axis
 
         Returns
-        ---------
+        ------------------
         No return value.
 
         Error
-        ---------
-            ValueError: List content must be one-dimensional numerical data: train=", chack_train, ", test=", chack_test).
-            Solution: 'True': one-dimensional numerical list. For example:[1,5,8,6,3].    'False': two-dimensional lists, strings, and one-dimensional 
-            non-numerical lists.For example: [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_train' is'True', it means that 'train' does not need to be 
-            changed; if it is'False', the input'train' is changed to a one-dimensional list of numerical data.'test' has the same judgment and processing 
-            method as 'train'.
+        ------------------
+             | ValueError: List content must be one-dimensional numerical data: train=", chack_train, ", test=", chack_test).
+             | Solution: 'True', one-dimensional numerical list. For example,[1,5,8,6,3].    'False', two-dimensional lists, strings, and one-dimensional non-numerical lists.For example, [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_train' is'True', it means that 'train' does not need to be changed; if it is'False', the input'train' is changed to a one-dimensional list of numerical data.'test' has the same judgment and processing method as 'train'.
 
-            TypeError: object of type 'NoneType' has no len()
-            Solution: 'train' or 'test' is None. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+             | TypeError: object of type 'NoneType' has no len()
+             | Solution: 'train' or 'test' is None. Check that the input list is a one-dimensional list, for example, [1,5,8,6,3].
 
         """
         try:

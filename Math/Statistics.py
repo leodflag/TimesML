@@ -9,7 +9,7 @@ Addition, subtraction, multiplication, and division of lists, as well as basic s
 such as variance, standard deviation, and autocorrelation coefficient.
 
 Functions
------------
+-------------------
 chack_list_all_num(listA) -> bool
 	Determine the content of the list as one numerical data.
 
@@ -68,7 +68,7 @@ ACF(listA, listB) -> float
 	Calculate the autocorrelation coefficients of two lists of one-dimensional data.
 
 Notes
------------
+-------------------
 Pay attention to the input data type of the function.
 
 Use the function "list_to_dataframe" or "dataframe_to_list" of the module "TimeSeriesAnalysis.ProcessData" to convert the data type.
@@ -86,24 +86,20 @@ def chack_list_all_num(listA) -> bool:
     it will be returned 'False', otherwise it will return 'True'.
 
     Parameters
-    ---------
-        listA : list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+    -----------------
+        listA : list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
     Returns
-    ---------
-    bool(True or False).
-
-    'True': one-dimensional numerical list. For example:[1,5,8,6,3].    'False': two-dimensional lists, strings, 
-    and one-dimensional non-numerical lists.For example: [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5].
+    -----------------
+    bool(True or False). 'True', one-dimensional numerical list. For example, [1,5,8,6,3].    'False', two-dimensional lists, strings, and one-dimensional non-numerical lists.For example, [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5].
 
     Error
-    ---------
-        ValueError: The list must be one-dimensional numerical data, and there is at least one numerical data in it.
-        Solution: The entered'listA' is an empty list. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+    -----------------
+         | ValueError: The list must be one-dimensional numerical data, and there is at least one numerical data in it.
+         | Solution: The entered'listA' is an empty list. Check that the input list is a one-dimensional list, for example, [1,5,8,6,3].
 
-        TypeError: object of type 'NoneType' has no len()
-        Solution:  Please do not enter 'None'.Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+         | TypeError: object of type 'NoneType' has no len()
+         | Solution:  Please do not enter 'None'.Check that the input list is a one-dimensional list, for example, [1,5,8,6,3].
 
     """
     try:
@@ -128,30 +124,25 @@ def plus(listA, listB) -> list:
     Addition: The two lists are added element by element, and return a list of sums.
 
     Parameters
-    ---------
-        listA: list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+    -----------------
+        listA: list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
-        listB: list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+        listB: list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
     Returns
-    ---------
+    -----------------
     list. The result of adding the two lists.
 
     Error
-    ---------
-        ValueError: The two lists must be the same length.
-        Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
+    -----------------
+         | ValueError: The two lists must be the same length.
+         | Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
 
-        ValueError: List content must be one-dimensional numerical data: listA=",chack_A, "; listB=", chack_B.
-        Solution: 'True': one-dimensional numerical list. For example:[1,5,8,6,3].    'False': two-dimensional lists, strings, and one-dimensional 
-        non-numerical lists.For example: [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_A' is'True', it means that 'listA' does not need to be 
-        changed; if it is'False', the input'listA' is changed to a one-dimensional list of numerical data.ListB has the same judgment and processing 
-        method as listA.
+         | ValueError: List content must be one-dimensional numerical data: listA=",chack_A, "; listB=", chack_B.
+         | Solution: 'True', one-dimensional numerical list. For example,[1,5,8,6,3].    'False', two-dimensional lists, strings, and one-dimensional non-numerical lists.For example, [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_A' is'True', it means that 'listA' does not need to be changed; if it is'False', the input'listA' is changed to a one-dimensional list of numerical data.ListB has the same judgment and processing method as listA.
 
-        TypeError: object of type 'NoneType' has no len()
-        Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+         | TypeError: object of type 'NoneType' has no len()
+         | Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example, [1,5,8,6,3].
 
     """
     try:
@@ -176,30 +167,25 @@ def sub(listA, listB) -> list:
     Subtraction: Subtract the elements of two lists pair by pair, and return a list of results.
 
     Parameters
-    ---------
-        listA: list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+    -----------------
+        listA: list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
-        listB: list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+        listB: list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
     Returns
-    ---------
+    -----------------
     list. The result of subtracting the two lists.
 
     Error
-    ---------
-        ValueError: The two lists must be the same length.
-        Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
+    -----------------
+         | ValueError: The two lists must be the same length.
+         | Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
 
-        ValueError: List content must be one-dimensional numerical data: listA=",chack_A, "; listB=", chack_B.
-        Solution: 'True': one-dimensional numerical list. For example:[1,5,8,6,3].    'False': two-dimensional lists, strings, and one-dimensional 
-        non-numerical lists.For example: [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_A' is'True', it means that 'listA' does not need to be 
-        changed; if it is'False', the input 'listA' is changed to a one-dimensional list of numerical data.ListB has the same judgment and processing 
-        method as listA.
+         | ValueError: List content must be one-dimensional numerical data: listA=",chack_A, "; listB=", chack_B.
+         | Solution: 'True', one-dimensional numerical list. For example,[1,5,8,6,3].    'False', two-dimensional lists, strings, and one-dimensional non-numerical lists.For example, [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_A' is'True', it means that 'listA' does not need to be changed; if it is'False', the input 'listA' is changed to a one-dimensional list of numerical data.ListB has the same judgment and processing method as listA.
 
-        TypeError: object of type 'NoneType' has no len()
-        Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+         | TypeError: object of type 'NoneType' has no len()
+         | Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example, [1,5,8,6,3].
 
     """
     try:
@@ -224,30 +210,25 @@ def mult(listA, listB) -> list:
     Multiplication: The elements of two lists are multiplied pair by pair to return a list of results.
 
     Parameters
-    ---------
-        listA: list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+    -----------------
+        listA: list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
-        listB: list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+        listB: list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
     Returns
-    ---------
+    -----------------
     list. The result of multiplication.
 
     Error
-    ---------
-        ValueError: The two lists must be the same length.
-        Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
+    -----------------
+         | ValueError: The two lists must be the same length.
+         | Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
 
-        ValueError: List content must be one-dimensional numerical data: listA=",chack_A, "; listB=", chack_B.
-        Solution: 'True': one-dimensional numerical list. For example:[1,5,8,6,3].    'False': two-dimensional lists, strings, and one-dimensional 
-        non-numerical lists.For example: [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_A' is'True', it means that 'listA' does not need to be 
-        changed; if it is'False', the input 'listA' is changed to a one-dimensional list of numerical data.ListB has the same judgment and processing 
-        method as listA.
+         | ValueError: List content must be one-dimensional numerical data: listA=",chack_A, "; listB=", chack_B.
+         | Solution: 'True', one-dimensional numerical list. For example,[1,5,8,6,3].    'False', two-dimensional lists, strings, and one-dimensional non-numerical lists.For example, [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_A' is'True', it means that 'listA' does not need to be changed; if it is'False', the input 'listA' is changed to a one-dimensional list of numerical data.ListB has the same judgment and processing method as listA.
 
-        TypeError: object of type 'NoneType' has no len()
-        Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+         | TypeError: object of type 'NoneType' has no len()
+         | Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example, [1,5,8,6,3].
 
     """
     try:
@@ -272,30 +253,25 @@ def div(listA, listB) -> list:
     Division: Divide the elements of two lists pair by pair, and return a list of results.
 
     Parameters
-    ---------
-        listA: list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+    -----------------
+        listA: list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
-        listB: list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+        listB: list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
     Returns
-    ---------
+    -----------------
     list. Result of division.
 
     Error
-    ---------
-        ValueError: The two lists must be the same length.
-        Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
+    -----------------
+         | ValueError: The two lists must be the same length.
+         | Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
 
-        ValueError: List content must be one-dimensional numerical data: listA=",chack_A, "; listB=", chack_B.
-        Solution: 'True': one-dimensional numerical list. For example:[1,5,8,6,3].    'False': two-dimensional lists, strings, and one-dimensional 
-        non-numerical lists.For example: [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_A' is'True', it means that 'listA' does not need to be 
-        changed; if it is'False', the input 'listA' is changed to a one-dimensional list of numerical data.ListB has the same judgment and processing 
-        method as listA.
+         | ValueError: List content must be one-dimensional numerical data: listA=",chack_A, "; listB=", chack_B.
+         | Solution: 'True', one-dimensional numerical list. For example,[1,5,8,6,3].    'False', two-dimensional lists, strings, and one-dimensional non-numerical lists.For example, [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_A' is'True', it means that 'listA' does not need to be changed; if it is'False', the input 'listA' is changed to a one-dimensional list of numerical data.ListB has the same judgment and processing method as listA.
 
-        TypeError: object of type 'NoneType' has no len()
-        Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+         | TypeError: object of type 'NoneType' has no len()
+         | Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example, [1,5,8,6,3].
 
     """
     try:
@@ -318,26 +294,23 @@ def log(listA) -> list:
     """Multiply all the numerical elements in the list by the natural logarithm.
 
     Parameters
-    ---------
-        listA: list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+    -----------------
+        listA: list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
     Returns
-    ---------
+    -----------------
     list. Result of natural logarithm list.
 
     Error
-    ---------
-        ValueError: List content must be one-dimensional numerical data: listA=",chack_A".
-        Solution: 'True': one-dimensional numerical list. For example:[1,5,8,6,3].    'False': two-dimensional lists, strings, and one-dimensional 
-        non-numerical lists.For example: [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_A' is'True', it means that 'listA' does not need to be 
-        changed; if it is'False', the input 'listA' is changed to a one-dimensional list of numerical data.
+    -----------------
+         | ValueError: List content must be one-dimensional numerical data: listA=",chack_A".
+         | Solution: 'True', one-dimensional numerical list. For example,[1,5,8,6,3].    'False', two-dimensional lists, strings, and one-dimensional non-numerical lists.For example, [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_A' is'True', it means that 'listA' does not need to be changed; if it is'False', the input 'listA' is changed to a one-dimensional list of numerical data.
 
-        TypeError: object of type 'NoneType' has no len()
-        Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+         | TypeError: object of type 'NoneType' has no len()
+         | Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example, [1,5,8,6,3].
 
     References
-    ---------
+    -----------------
     log: https://en.wikipedia.org/wiki/Natural_logarithm
 
     """
@@ -361,27 +334,25 @@ def round_list(listA, ndigits: int) -> list:
     """Take all the values in the list to a few digits after the decimal point.
 
     Parameters
-    ---------
-        listA : list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+    -----------------
+        listA : list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
-        ndigits: int
-        A few digits after the decimal point.
+        ndigits: int. A few digits after the decimal point.
 
     Returns
-    ---------
+    -----------------
     list. Return a list of values with a few digits after the decimal point.
 
     Error
-    ---------
-        ValueError: The list must be one-dimensional numerical data, and there is at least one numerical data in it.
-        Solution: The entered'listA' is an empty list. Please change to a one-dimensional list of numerical data.
+    -----------------
+         | ValueError: The list must be one-dimensional numerical data, and there is at least one numerical data in it.
+         | Solution: The entered'listA' is an empty list. Please change to a one-dimensional list of numerical data.
 
-        ValueError: The list must be one-dimensional numerical data.
-        Solution: 'listA' contains a string or is two-dimensional list. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+         | ValueError: The list must be one-dimensional numerical data.
+         | Solution: 'listA' contains a string or is two-dimensional list. Check that the input list is a one-dimensional list, for example, [1,5,8,6,3].
 
-        TypeError: object of type 'NoneType' has no len()
-        Solution: 'listA' is None. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+         | TypeError: object of type 'NoneType' has no len()
+         | Solution: 'listA' is None. Check that the input list is a one-dimensional list, for example, [1,5,8,6,3].
 
     """
     try:
@@ -402,28 +373,27 @@ def mean(listA) -> float:
     Mean: Add all the numerical data in the list and divide by the length of the list.
 
     Parameters
-    ---------
-        listA : list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+    -----------------
+        listA : list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
     Returns
-    ---------
+    -----------------
     float. Arithmetic mean of numerical data in a list.
 
     Error
-    ---------
-        ValueError: The list must be one-dimensional numerical data, and there is at least one numerical data in it.
-        Solution: The entered'listA' is an empty list. Please change to a one-dimensional list of numerical data.
+    -----------------
+         | ValueError: The list must be one-dimensional numerical data, and there is at least one numerical data in it.
+         | Solution: The entered'listA' is an empty list. Please change to a one-dimensional list of numerical data.
 
-        ValueError: The list must be one-dimensional numerical data.
-        Solution: 'listA' contains a string or is two-dimensional list. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+         | ValueError: The list must be one-dimensional numerical data.
+         | Solution: 'listA' contains a string or is two-dimensional list. Check that the input list is a one-dimensional list, for example, [1,5,8,6,3].
 
-        TypeError: object of type 'NoneType' has no len()
-        Solution: 'listA' is None. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+         | TypeError: object of type 'NoneType' has no len()
+         | Solution: 'listA' is None. Check that the input list is a one-dimensional list, for example, [1,5,8,6,3].
 
     References
-    ---------
-    Mean: https://zh.wikipedia.org/wiki/%E5%B9%B3%E5%9D%87%E6%95%B0
+    -----------------
+    Mean: https://en.wikipedia.org/wiki/Mean
 
     """
     try:
@@ -446,28 +416,27 @@ def variance(listA) -> float:
     and then squared, after adding them up and dividing by the length of the list minus one.
 
     Parameters
-    ---------
-        listA : list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+    -----------------
+        listA : list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
     Returns
-    ---------
+    -----------------
     float. The variance of all elements in a list.
 
     Error
-    ---------
-        ValueError: The list must be one-dimensional numerical data, and there is at least one numerical data in it.
-        Solution: The entered'listA' is an empty list. Please change to a one-dimensional list of numerical data.
+    -----------------
+         | ValueError: The list must be one-dimensional numerical data, and there is at least one numerical data in it.
+         | Solution: The entered'listA' is an empty list. Please change to a one-dimensional list of numerical data.
 
-        ValueError: The list must be one-dimensional numerical data.
-        Solution: 'listA' contains a string or is two-dimensional list. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+         | ValueError: The list must be one-dimensional numerical data.
+         | Solution: 'listA' contains a string or is two-dimensional list. Check that the input list is a one-dimensional list, for example, [1,5,8,6,3].
 
-        TypeError: object of type 'NoneType' has no len()
-        Solution: 'listA' is None. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+         | TypeError: object of type 'NoneType' has no len()
+         | Solution: 'listA' is None. Check that the input list is a one-dimensional list, for example, [1,5,8,6,3].
 
     References
-    ---------
-    Variance: https://zh.wikipedia.org/wiki/%E6%96%B9%E5%B7%AE
+    -----------------
+    Variance: https://en.wikipedia.org/wiki/Variance
 
     """
     try:
@@ -489,28 +458,27 @@ def standard_deviation(listA) -> float:
     one, and finally take the square root.
 
     Parameters
-    ---------
-        listA: list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+    -----------------
+        listA: list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
     Returns
-    ---------
+    -----------------
     float. The standard deviation of all elements in a list.
 
     Error
-    ---------
-        ValueError: The list must be one-dimensional numerical data, and there is at least one numerical data in it.
-        Solution: The entered'listA' is an empty list. Please change to a one-dimensional list of numerical data.
+    -----------------
+         | ValueError: The list must be one-dimensional numerical data, and there is at least one numerical data in it.
+         | Solution: The entered'listA' is an empty list. Please change to a one-dimensional list of numerical data.
 
-        ValueError: The list must be one-dimensional numerical data.
-        Solution: 'listA' contains a string or is two-dimensional list. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+         | ValueError: The list must be one-dimensional numerical data.
+         | Solution: 'listA' contains a string or is two-dimensional list. Check that the input list is a one-dimensional list, for example, [1,5,8,6,3].
 
-        TypeError: object of type 'NoneType' has no len()
-        Solution: 'listA' is None. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+         | TypeError: object of type 'NoneType' has no len()
+         | Solution: 'listA' is None. Check that the input list is a one-dimensional list, for example, [1,5,8,6,3].
 
     References
-    ---------
-    Standard deviation: https://zh.wikipedia.org/wiki/%E6%A8%99%E6%BA%96%E5%B7%AE
+    -----------------
+    Standard deviation: https://en.wikipedia.org/wiki/Standard_deviation
 
     """
     try:
@@ -532,34 +500,29 @@ def covariance(listA, listB) -> float:
     divided by the length of the list minus one.
 
     Parameters
-    ---------
-        listA: list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+    -----------------
+        listA: list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
-        listB: list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+        listB: list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
     Returns
-    ---------
+    -----------------
     float. The covariance of two lists of one-dimensional data.
 
     Error
-    ---------
-        ValueError: The two lists must be the same length.
-        Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
+    -----------------
+         | ValueError: The two lists must be the same length.
+         | Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
 
-        ValueError: List content must be one-dimensional numerical data: listA=",chack_A, "; listB=", chack_B.
-        Solution: 'True': one-dimensional numerical list. For example:[1,5,8,6,3].    'False': two-dimensional lists, strings, and one-dimensional 
-        non-numerical lists.For example: [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_A' is'True', it means that 'listA' does not need to be 
-        changed; if it is'False', the input 'listA' is changed to a one-dimensional list of numerical data.ListB has the same judgment and processing 
-        method as listA.
+         | ValueError: List content must be one-dimensional numerical data: listA=",chack_A, "; listB=", chack_B.
+         | Solution: 'True', one-dimensional numerical list. For example,[1,5,8,6,3].    'False', two-dimensional lists, strings, and one-dimensional non-numerical lists.For example, [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_A' is'True', it means that 'listA' does not need to be changed; if it is'False', the input 'listA' is changed to a one-dimensional list of numerical data.ListB has the same judgment and processing method as listA.
 
-        TypeError: object of type 'NoneType' has no len()
-        Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+         | TypeError: object of type 'NoneType' has no len()
+         | Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example, [1,5,8,6,3].
 
     References
-    ---------
-    Covariance: https://zh.wikipedia.org/wiki/%E5%8D%8F%E6%96%B9%E5%B7%AE
+    -----------------
+    Covariance: https://en.wikipedia.org/wiki/Covariance
 
     """
     try:
@@ -581,28 +544,27 @@ def coefficient_of_variation(listA) -> float:
     by the mean and multiply by 100.
 
     Parameters
-    ---------
-        listA : list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+    -----------------
+        listA : list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
     Returns
-    ---------
+    -----------------
     float. The coefficient of variation of all elements in a list.
 
     Error
-    ---------
-        ValueError: The list must be one-dimensional numerical data, and there is at least one numerical data in it.
-        Solution: The entered'listA' is an empty list. Please change to a one-dimensional list of numerical data.
+    -----------------
+         | ValueError: The list must be one-dimensional numerical data, and there is at least one numerical data in it.
+         | Solution: The entered'listA' is an empty list. Please change to a one-dimensional list of numerical data.
 
-        ValueError: The list must be one-dimensional numerical data.
-        Solution: 'listA' contains a string or is two-dimensional list. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+         | ValueError: The list must be one-dimensional numerical data.
+         | Solution: 'listA' contains a string or is two-dimensional list. Check that the input list is a one-dimensional list, for example, [1,5,8,6,3].
 
-        TypeError: object of type 'NoneType' has no len()
-        Solution: 'listA' is None. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+         | TypeError: object of type 'NoneType' has no len()
+         | Solution: 'listA' is None. Check that the input list is a one-dimensional list, for example, [1,5,8,6,3].
 
     References
-    ---------
-    Coefficient of variation: https://zh.wikipedia.org/wiki/%E5%8F%98%E5%BC%82%E7%B3%BB%E6%95%B0
+    -----------------
+    Coefficient of variation: https://en.wikipedia.org/wiki/Coefficient_of_variation
 
     """
     try:
@@ -619,33 +581,28 @@ def correlation_coefficient(listA, listB) -> float:
     Algorithm: Calculate the linear correlation coefficient according to the formula.
 
     Parameters
-    ---------
-        listA : list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+    -----------------
+        listA : list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
-        listB : list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+        listB : list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
     Returns
-    ---------
+    -----------------
     float. The linear correlation coefficient  of two lists of one-dimensional data.
 
     Error
-    ---------
-        ValueError: The two lists must be the same length.
-        Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
+    -----------------
+         | ValueError: The two lists must be the same length.
+         | Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
 
-        ValueError: List content must be one-dimensional numerical data: listA=",chack_A, "; listB=", chack_B.
-        Solution: 'True': one-dimensional numerical list. For example:[1,5,8,6,3].    'False': two-dimensional lists, strings, and one-dimensional 
-        non-numerical lists.For example: [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_A' is'True', it means that 'listA' does not need to be 
-        changed; if it is'False', the input 'listA' is changed to a one-dimensional list of numerical data.ListB has the same judgment and processing 
-        method as listA.
+         | ValueError: List content must be one-dimensional numerical data: listA=",chack_A, "; listB=", chack_B.
+         | Solution: 'True', one-dimensional numerical list. For example,[1,5,8,6,3].    'False', two-dimensional lists, strings, and one-dimensional non-numerical lists.For example, [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_A' is'True', it means that 'listA' does not need to be changed; if it is'False', the input 'listA' is changed to a one-dimensional list of numerical data.ListB has the same judgment and processing method as listA.
 
-        TypeError: object of type 'NoneType' has no len()
-        Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+         | TypeError: object of type 'NoneType' has no len()
+         | Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example, [1,5,8,6,3].
 
     References
-    ---------
+    -----------------
     Correlation coefficient: https://www.statisticshowto.com/probability-and-statistics/correlation-coefficient-formula/
 
     """
@@ -671,35 +628,29 @@ def coefficient_of_determination(train_target, target_list, predict_list) -> flo
     the variation explained by this regression line is close to 100%. Algorithm: Square after calculating the linear correlation coefficient.
 
     Parameters
-    ---------
-        target_list : list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+    -----------------
+        target_list : list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
-        predict_list : list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+        predict_list : list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
     Returns
-    ---------
+    -----------------
     float. The coefficient of determination  of two lists of one-dimensional data.
 
     Error
-    ---------
-        ValueError: The two lists must be the same length.
-        Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
+    -----------------
+         | ValueError: The two lists must be the same length.
+         | Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
 
-        ValueError: List content must be one-dimensional numerical data: train_target=",chack_train_target, "; target_list=", chack_target_list,  
-        "; predict_list=", chack_predict_list.
-        Solution: 'True': one-dimensional numerical list. For example:[1,5,8,6,3].    'False': two-dimensional lists, strings, and one-dimensional 
-        non-numerical lists.For example: [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_train_target' is'True', it means that 'train_target' does not need to be 
-        changed; if it is'False', the input 'train_target' is changed to a one-dimensional list of numerical data. 'target_list' and 'predict_list' have the same judgment and processing 
-        method as 'train_target'.
+         | ValueError: List content must be one-dimensional numerical data: train_target=",chack_train_target, "; target_list=", chack_target_list, "; predict_list=", chack_predict_list.
+         | Solution: 'True', one-dimensional numerical list. For example,[1,5,8,6,3].    'False', two-dimensional lists, strings, and one-dimensional non-numerical lists.For example, [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_train_target' is'True', it means that 'train_target' does not need to be changed; if it is'False', the input 'train_target' is changed to a one-dimensional list of numerical data. 'target_list' and 'predict_list' have the same judgment and processing method as 'train_target'.
 
-        TypeError: object of type 'NoneType' has no len()
-        Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+         | TypeError: object of type 'NoneType' has no len()
+         | Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example, [1,5,8,6,3].
 
     References
-    ---------
-    Coefficient of determination: https://zh.wikipedia.org/wiki/%E5%86%B3%E5%AE%9A%E7%B3%BB%E6%95%B0
+    -----------------
+    Coefficient of determination: https://en.wikipedia.org/wiki/Coefficient_of_determination
 
     """
     try:
@@ -731,34 +682,29 @@ def mean_square_error(target_list, predict_list) -> float:
     all the values in the multiplied list are summed, and finally divide by the total number of list elements.
 
     Parameters
-    ---------
-        target_list: list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+    -----------------
+        target_list: list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
-        predict_list: list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+        predict_list: list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
     Returns
-    ---------
+    -----------------
     float. The mean square error  of two lists of one-dimensional data.
 
     Error
-    ---------
-        ValueError: The two lists must be the same length.
-        Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
+    -----------------
+         | ValueError: The two lists must be the same length.
+         | Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
 
-        ValueError: List content must be one-dimensional numerical data: listA=",chack_A, "; listB=", chack_B.
-        Solution: 'True': one-dimensional numerical list. For example:[1,5,8,6,3].    'False': two-dimensional lists, strings, and one-dimensional 
-        non-numerical lists.For example: [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_A' is'True', it means that 'listA' does not need to be 
-        changed; if it is'False', the input 'listA' is changed to a one-dimensional list of numerical data.ListB has the same judgment and processing 
-        method as listA.
+         | ValueError: List content must be one-dimensional numerical data: listA=",chack_A, "; listB=", chack_B.
+         | Solution: 'True', one-dimensional numerical list. For example,[1,5,8,6,3].    'False', two-dimensional lists, strings, and one-dimensional non-numerical lists.For example, [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_A' is'True', it means that 'listA' does not need to be changed; if it is'False', the input 'listA' is changed to a one-dimensional list of numerical data.ListB has the same judgment and processing method as listA.
 
-        TypeError: object of type 'NoneType' has no len()
-        Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+         | TypeError: object of type 'NoneType' has no len()
+         | Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example, [1,5,8,6,3].
 
     References
-    ---------
-    Mean square error: https://zh.wikipedia.org/wiki/%E5%86%B3%E5%AE%9A%E7%B3%BB%E6%95%B0
+    -----------------
+    Mean square error: https://en.wikipedia.org/wiki/Mean_squared_error
 
     """
     try:
@@ -775,33 +721,28 @@ def mean_absolute_error(target_list, predict_list) -> float:
      subtract the two lists, take the absolute value of each number and then add them all, and finally divide by the total number of list elements.
 
     Parameters
-    ---------
-        target_list: list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+    -----------------
+        target_list: list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
-        predict_list: list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+        predict_list: list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
     Returns
-    ---------
+    -----------------
     float. The root mean square error  of two lists of one-dimensional data.
 
     Error
-    ---------
-        ValueError: The two lists must be the same length.
-        Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
+    -----------------
+         | ValueError: The two lists must be the same length.
+         | Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
 
-        ValueError: List content must be one-dimensional numerical data: listA=",chack_A, "; listB=", chack_B.
-        Solution: 'True': one-dimensional numerical list. For example:[1,5,8,6,3].    'False': two-dimensional lists, strings, and one-dimensional 
-        non-numerical lists.For example: [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_A' is'True', it means that 'listA' does not need to be 
-        changed; if it is'False', the input 'listA' is changed to a one-dimensional list of numerical data.ListB has the same judgment and processing 
-        method as listA.
+         | ValueError: List content must be one-dimensional numerical data: listA=",chack_A, "; listB=", chack_B.
+         | Solution: 'True', one-dimensional numerical list. For example,[1,5,8,6,3].    'False', two-dimensional lists, strings, and one-dimensional non-numerical lists.For example, [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_A' is'True', it means that 'listA' does not need to be changed; if it is'False', the input 'listA' is changed to a one-dimensional list of numerical data.ListB has the same judgment and processing method as listA.
 
-        TypeError: object of type 'NoneType' has no len()
-        Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+         | TypeError: object of type 'NoneType' has no len()
+         | Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example, [1,5,8,6,3].
 
     References
-    ---------
+    -----------------
     MAE wiki :https://en.wikipedia.org/wiki/Mean_absolute_error
 
     """
@@ -818,33 +759,28 @@ def root_mean_squard_error(target_list, predict_list) -> float:
     The calculation method is the square root of MSE.
 
     Parameters
-    ---------
-        target_list: list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+    -----------------
+        target_list: list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
-        predict_list: list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+        predict_list: list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
     Returns
-    ---------
+    -----------------
     float. The root mean square error  of two lists of one-dimensional data.
 
     Error
-    ---------
-        ValueError: The two lists must be the same length.
-        Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
+    -----------------
+         | ValueError: The two lists must be the same length.
+         | Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
 
-        ValueError: List content must be one-dimensional numerical data: listA=",chack_A, "; listB=", chack_B.
-        Solution: 'True': one-dimensional numerical list. For example:[1,5,8,6,3].    'False': two-dimensional lists, strings, and one-dimensional 
-        non-numerical lists.For example: [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_A' is'True', it means that 'listA' does not need to be 
-        changed; if it is'False', the input 'listA' is changed to a one-dimensional list of numerical data.ListB has the same judgment and processing 
-        method as listA.
+         | ValueError: List content must be one-dimensional numerical data: listA=",chack_A, "; listB=", chack_B.
+         | Solution: 'True', one-dimensional numerical list. For example,[1,5,8,6,3].    'False', two-dimensional lists, strings, and one-dimensional non-numerical lists.For example, [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_A' is'True', it means that 'listA' does not need to be changed; if it is'False', the input 'listA' is changed to a one-dimensional list of numerical data.ListB has the same judgment and processing method as listA.
 
-        TypeError: object of type 'NoneType' has no len()
-        Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+         | TypeError: object of type 'NoneType' has no len()
+         | Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example, [1,5,8,6,3].
 
     References
-    ---------
+    -----------------
     Root mean square  error(RMSE) wiki: https://en.wikipedia.org/wiki/Root-mean-square_deviation
 
     """
@@ -855,7 +791,7 @@ def root_mean_squard_error(target_list, predict_list) -> float:
         raise TypeError(err)
 
 def normalized_mean_squard_error(target_list, predict_list) -> float:
-    """Regression indicators for numerical prediction. Calculate the normalized mean square error (NRMSE) of two lists of one-dimensional data.
+    """Regression indicators for numerical prediction. Calculate the normalized mean square error (NRMSE、NRMSD) of two lists of one-dimensional data.
 
     NRMSE is a statistical value, and its method is to normalize RMSE. The normalization method used by this function is that 
     the error between the maximum and minimum is used as the denominator, and RMSE is used as the numerator.
@@ -864,34 +800,30 @@ def normalized_mean_squard_error(target_list, predict_list) -> float:
     the closer the model predicted value to the target value.
 
     Parameters
-    ---------
-        target_list: list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+    -----------------
+        target_list: list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
-        predict_list: list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+        predict_list: list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
     Returns
-    ---------
+    -----------------
     float. The normalized mean square error  of two lists of one-dimensional data.
 
     Error
-    ---------
-        ValueError: The two lists must be the same length.
-        Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
+    -----------------
+         | ValueError: The two lists must be the same length.
+         | Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
 
-        ValueError: List content must be one-dimensional numerical data: listA=",chack_A, "; listB=", chack_B.
-        Solution: 'True': one-dimensional numerical list. For example:[1,5,8,6,3].    'False': two-dimensional lists, strings, and one-dimensional 
-        non-numerical lists.For example: [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_A' is'True', it means that 'listA' does not need to be 
-        changed; if it is'False', the input 'listA' is changed to a one-dimensional list of numerical data.ListB has the same judgment and processing 
-        method as listA.
+         | ValueError: List content must be one-dimensional numerical data: listA=",chack_A, "; listB=", chack_B.
+         | Solution: 'True', one-dimensional numerical list. For example,[1,5,8,6,3].    'False', two-dimensional lists, strings, and one-dimensional non-numerical lists.For example, [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_A' is'True', it means that 'listA' does not need to be changed; if it is'False', the input 'listA' is changed to a one-dimensional list of numerical data.ListB has the same judgment and processing method as listA.
 
-        TypeError: object of type 'NoneType' has no len()
-        Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+         | TypeError: object of type 'NoneType' has no len()
+         | Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example, [1,5,8,6,3].
 
     References
-    ---------
-    Normalized mean square error (NRMSE) wiki: https://zh.wikipedia.org/wiki/%E6%AD%A3%E8%A6%8F%E5%8C%96%E6%96%B9%E5%9D%87%E6%A0%B9%E5%B7%AE
+    -----------------
+    Normalized mean square error (NRMSD) wiki: https://en.wikipedia.org/wiki/Root-mean-square_deviation
+
     Normalized mean square error (NRMSE) function: https://www.marinedatascience.co/blog/2019/01/07/normalizing-the-rmse/
 
     """
@@ -908,34 +840,30 @@ def ACF(listA, listB) -> float:
     Algorithm: Calculate the autocorrelation coefficients according to the formula.
 
     Parameters
-    ---------
-        listA : list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+    -----------------
+        listA : list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
-        listB : list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+        listB : list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
     Returns
-    ---------
+    -----------------
     float. The autocorrelation coefficients of two lists of one-dimensional data.
 
     Error
-    ---------
-        ValueError: The two lists must be the same length.
-        Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
+    -----------------
+         | ValueError: The two lists must be the same length.
+         | Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
 
-        ValueError: List content must be one-dimensional numerical data: listA=",chack_A, "; listB=", chack_B.
-        Solution: 'True': one-dimensional numerical list. For example:[1,5,8,6,3].    'False': two-dimensional lists, strings, and one-dimensional 
-        non-numerical lists.For example: [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_A' is'True', it means that 'listA' does not need to be 
-        changed; if it is'False', the input 'listA' is changed to a one-dimensional list of numerical data.ListB has the same judgment and processing 
-        method as listA.
+         | ValueError: List content must be one-dimensional numerical data: listA=",chack_A, "; listB=", chack_B.
+         | Solution: 'True', one-dimensional numerical list. For example,[1,5,8,6,3].    'False', two-dimensional lists, strings, and one-dimensional non-numerical lists.For example, [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_A' is'True', it means that 'listA' does not need to be changed; if it is'False', the input 'listA' is changed to a one-dimensional list of numerical data.ListB has the same judgment and processing method as listA.
 
-        TypeError: object of type 'NoneType' has no len()
-        Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+         | TypeError: object of type 'NoneType' has no len()
+         | Solution: 'listA' or 'listB' is None. Check that the input list is a one-dimensional list, for example, [1,5,8,6,3].
 
     References
-    ---------
-    Autocorrelation coefficients wiki: https://zh.wikipedia.org/wiki/%E8%87%AA%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0
+    -----------------
+    Autocorrelation coefficients wiki: https://en.wikipedia.org/wiki/Autocorrelation
+    
     Autocorrelation Function: https://www.real-statistics.com/time-series-analysis/stochastic-processes/autocorrelation-function/
 
     """

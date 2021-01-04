@@ -10,7 +10,7 @@ The data processing method is archiving, the two formats are interchanged,
 the data is divided, and the time series model data set is established.
 
 Functions
----------
+------------------
 read_file(path: str, col_name: str='close') -> pandas.Series
 	Read file to get time series data.
 
@@ -23,10 +23,10 @@ save_flie(data, path: str, stock_id: str = 'stock', file_format: str = 'csv')
 create_sequence_list(data) -> list
 	Create a sequence starting from 1.
 
-list_to_dataframe(data: list)
+list_to_dataframe(data: list) -> pandas.DataFrame
 	Convert the 'list' type of the one-dimensional list of values to the 'DataFrame' type.
 
-dataframe_to_list(data: pandas.Series)
+dataframe_to_list(data: pandas.Series) -> list
 	Convert the 'pandas.Series' type of the one-dimensional list of values to the'list' type.
 
 split_data(data, ratio: float)
@@ -38,8 +38,9 @@ create_ar_data(data: pandas.Series, lags: int = 1) -> pandas.DataFrame
 n_order_difference_data(data: pandas.Series, periods: int = 1, log: bool = False) -> pandas.Series:
     Sequence of numbers after difference operation.
 
+
 Notes
------------
+--------------------
 If the time series data type is a list, you can use the function "list_to_dataframe" of the module "TimeSeriesAnalysis.ProcessData" to convert the data type.
 
 """
@@ -61,28 +62,25 @@ def read_file(path: str, col_name: str='close') -> pandas.Series:
     The file formats that can be read by this function are csv and txt, and the returned data type is pandas.Series.
 
     Parameters
-    ---------
+    ------------------
+        path : string. Enter the absolute path or relative path where the file is located. The file formats that can be read are csv and txt.
 
-        path : string
-        Enter the absolute path or relative path where the file is located. The file formats that can be read are csv and txt.
-
-        col_name : string , default = 'close'.
-        The text of the file must contain column names.
+        col_name : string , default = 'close'. The text of the file must contain column names.
 
     Returns
-    ---------
+    ------------------
     pandas.Series. Return a list with date as the column index value, the data type is float.
 
     Error
-    ---------
-        FileNotFoundError : [Errno 2] There is no such file or directory: 'wrong path'
-        Solution : Enter the correct file path and the correct file name.
+    ------------------
+         | FileNotFoundError: [Errno 2] There is no such file or directory: 'wrong path'.
+         | Solution: Enter the correct file path and the correct file name.
 
-        ValueError: Invalid file path or buffer object type: <class 'int'>
-        Solution : Enter the correct file path and the correct file name.
+         | ValueError: Invalid file path or buffer object type: <class 'int'>
+         | Solution: Enter the correct file path and the correct file name.
 
-        KeyError : "This file has not index value", err.
-        Solution : Actually check whether the column name contained in the file content exists, and enter the correct column name.
+         | KeyError: "This file has not index value", err.
+         | Solution: Actually check whether the column name contained in the file content exists, and enter the correct column name.
 
     """
     try:
@@ -101,38 +99,31 @@ def get_data_yahoo(stock_id: str, start_period: str, end_period: str, file_forma
     data type is pandas.Series.
 
     Parameters
-    ---------
-        stock_id: string
-        Enter the stock ID. For example: Taiwan stock" 2206.TW"; US stock "SWKS".
+    ------------------
+        stock_id: string. Enter the stock ID. For example, Taiwan stock" 2206.TW"; US stock "SWKS".
 
-        start_period: string
-        The start time of the time period for crawling stock prices.  
-        For example: "2019 7 12", "2019, 7, 12", "2019 7", "2019, 7", "2019",  "7 21 2019", "7, 21, 2019", " 7 2019","7, 2019".
+        start_period: string. The start time of the time period for crawling stock prices. For example, "2019 7 12", "2019, 7, 12", "2019 7", "2019, 7", "2019",  "7 21 2019", "7, 21, 2019", " 7 2019","7, 2019".
 
-        end_period: string
-        The start time of the time period for crawling stock prices.  
-        For example: "2019 8 12", "2019, 8, 12", "2019 8", "2019, 8", "2019",  "8 21 2019", "8, 21, 2019", " 8 2019","8, 2019".
+        end_period: string. The start time of the time period for crawling stock prices. For example, "2019 8 12", "2019, 8, 12", "2019 8", "2019, 8", "2019",  "8 21 2019", "8, 21, 2019", " 8 2019","8, 2019".
 
-        file_format: string, default = 'csv'.
-        Archive the crawled stock market price data, file format is 'csv' or 'txt'.  For example: 'csv' ,'CSV' , 'txt', 'TXT'.
+        file_format: string, default = 'csv'. Archive the crawled stock market price data, file format is 'csv' or 'txt'.  For example, 'csv' ,'CSV' , 'txt', 'TXT'.
 
-        frequency: string, default = 'day'.
-        The frequency of stock market price data is daily, weekly, and monthly. For example: 'daily', 'day', 'weekly', 'week', 'monthly', 'month'.
+        frequency: string, default = 'day'. The frequency of stock market price data is daily, weekly, and monthly. For example, 'daily', 'day', 'weekly', 'week', 'monthly', 'month'.
 
     Returns
-    ---------
+    ------------------
     No return.
 
     Error
-    ---------
-        ValueError: 'start_period' must be earlier than 'end_period'.
-        Solution: Check whether the parameter matches the 'ValueError' description. For example: start_period = '2020, 2, 5',  end_period = '2020, 4, 5'
+    ------------------
+         | ValueError: 'start_period' must be earlier than 'end_period'.
+         | Solution: Check whether the parameter matches the 'ValueError' description. For example, start_period = '2020, 2, 5',  end_period = '2020, 4, 5'.
 
-        TypeError: Not found stock id.
-        Solution: Enter the correct stock id.
+         | TypeError: Not found stock id.
+         | Solution: Enter the correct stock id.
 
-        ConnectionError: Internet connection error.
-        Solution: Confirm that the network is connected.
+         | ConnectionError: Internet connection error.
+         | Solution: Confirm that the network is connected.
 
     """
     try:
@@ -180,34 +171,29 @@ def save_flie(data, path: str, stock_id: str = 'stock', file_format: str = 'csv'
     This function can save the input pandas.Series data type data into a csv or txt file.
 
     Parameters
-    ---------
-        data: pandas.Series and pandas.DataFrame.
-        pandas.Series: One-dimensional ndarray with axis labels (including time series). 
-        pandas.DataFrame: Two-dimensional, size-mutable, potentially heterogeneous tabular data.
+    ------------------
+        data: pandas.Series and pandas.DataFrame. pandas.Series: One-dimensional ndarray with axis labels (including time series). pandas.DataFrame: Two-dimensional, size-mutable, potentially heterogeneous tabular data.
 
-        path: str.
-        Save files to absolute path or relative path.If you enter a null string '' or "",it will be saved in the current folder
+        path: str. Save files to absolute path or relative path.If you enter a null string '' or "",it will be saved in the current folder.
 
-        stock_id: str, default = 'stock'.
-        File name when saving the file.
+        stock_id: str, default = 'stock'. File name when saving the file.
 
-        file_format: str, default = 'csv'.
-        Archive the crawled stock market price data, file format is 'csv' or 'txt'.  For example: 'csv' ,'CSV' , 'txt', 'TXT'.
+        file_format: str, default = 'csv'. Archive the crawled stock market price data, file format is 'csv' or 'txt'.  For example, 'csv' ,'CSV' , 'txt', 'TXT'.
 
     Returns
-    ---------
+    ------------------
     No return value.
 
     Error
-    ---------
-        PermissionError: Reject operations that do not comply with permissions.
-        Solution: Path or file name cannot be '/'.
+    ------------------
+         | PermissionError: Reject operations that do not comply with permissions.
+         | Solution: Path or file name cannot be '/'.
 
-        AttributeError: 'list' object has no attribute 'to_csv'
-        Solution: The data format must be pandas.Series and pandas.DataFrame.
+         | AttributeError: 'list' object has no attribute 'to_csv'
+         | Solution: The data format must be pandas.Series and pandas.DataFrame.
 
-        FileNotFoundError: No such file or file path.
-        Solution: Enter the correct file path.
+         | FileNotFoundError: No such file or file path.
+         | Solution: Enter the correct file path.
 
     """
     try:
@@ -226,23 +212,20 @@ def create_sequence_list(data) -> list:
     This function uses the length of the input one-dimensional numerical list to create a sequence starting from 1.
 
     Parameters
-    ---------
-        data: list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+    ------------------
+        data: list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
     Returns
-    ---------
+    ------------------
     list. Return a sequence list with the same length as 'data'.
 
     Error
-    ---------
-        ValueError: List content must be one-dimensional numerical data: chack_data=",chack_data.
-        Solution: 'True': one-dimensional numerical list. For example:[1,5,8,6,3].    'False': two-dimensional lists, strings, and one-dimensional 
-        non-numerical lists.For example: [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_data' is'True', it means that 'data' does not need to 
-        be changed; if it is'False', the input 'data' is changed to a one-dimensional list of numerical data.
+    ------------------
+         | ValueError: List content must be one-dimensional numerical data: chack_data=",chack_data.
+         | Solution: 'True', one-dimensional numerical list. For example,[1,5,8,6,3].    'False', two-dimensional lists, strings, and one-dimensional non-numerical lists.For example, [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If'chack_data' is'True', it means that 'data' does not need to be changed; if it is'False', the input 'data' is changed to a one-dimensional list of numerical data.
 
-        ValueError: 'data' must be one-dimensional numerical list.
-        Solution: Check that the input 'data' is a one-dimensional list, for example: [1,5,8,6,3].
+         | ValueError: 'data' must be one-dimensional numerical list.
+         | Solution: Check that the input 'data' is a one-dimensional list, for example, [1,5,8,6,3].
 
     """
     try:
@@ -262,24 +245,22 @@ def list_to_dataframe(data: list , index) -> pandas.DataFrame:
     """Convert the 'list' type of the one-dimensional list of values to the 'DataFrame' type.
 
     Parameters
-    ---------
-        data: list.
-        One-dimensional numerical list. For example: [1,5,8,6,3].
+    ------------------
+        data: list. One-dimensional numerical list. For example, [1,5,8,6,3].
 
-        index: pandas.Index, list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional list.
+        index: pandas.Index, list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional list.
 
     Returns
-    ---------
+    ------------------
     pandas.DataFrame. The one-dimensional list of values to the 'DataFrame' type.
 
     Error
-    ---------
-        ValueError: 'data' must be one-dimensional numerical list.
-        Solution: 'data' contains a string or is two-dimensional list. Check that the input list is a one-dimensional list, for example: [1,5,8,6,3].
+    ------------------
+         | ValueError: 'data' must be one-dimensional numerical list.
+         | Solution: 'data' contains a string or is two-dimensional list. Check that the input list is a one-dimensional list, for example, [1,5,8,6,3].
 
-        ValueError: The two lists must be the same length.
-        Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
+         | ValueError: The two lists must be the same length.
+         | Solution: Make sure that the number of numerical data in the two lists is the same (the same length).
 
     """
     try:
@@ -295,23 +276,20 @@ def dataframe_to_list(data: pandas.Series) -> list:
     """Convert the 'pandas.Series' type of the one-dimensional list of values to the'list' type.
 
     Parameters
-    ---------
-        data: pandas.Series.
-        'data' is a one-dimensional numerical data of type'pandas.Series' taken from'pandas.DataFrame'.
+    ------------------
+        data: pandas.Series. 'data' is a one-dimensional numerical data of type'pandas.Series' taken from'pandas.DataFrame'.
 
     Returns
-    ---------
+    ------------------
     list. One-dimensional numerical list.
 
     Error
-    ---------
-        ValueError: List content must be one numerical data: chack_data=", chack_data.
-        Solution: 'True': one-dimensional numerical list. For example:[1,5,8,6,3].    'False': two-dimensional lists, strings, and one-dimensional 
-        non-numerical lists.For example: [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If 'chack_data' is 'True', it means that 'data' does not need to 
-        be changed; if it is'False', the input 'data' is changed to a one-dimensional list of numerical data.
+    ------------------
+         | ValueError: List content must be one numerical data: chack_data=", chack_data.
+         | Solution: 'True', one-dimensional numerical list. For example,[1,5,8,6,3].    'False', two-dimensional lists, strings, and one-dimensional non-numerical lists.For example, [[3, 6], [7, 2, 9, 5]] , '5' ,  [3, 6, 7, '2', 9, 5] . If 'chack_data' is 'True', it means that 'data' does not need to be changed; if it is'False', the input 'data' is changed to a one-dimensional list of numerical data.
 
-        ValueError: The type of one-dimensional data must be 'pandas.Series', and the content is numeric data.
-        Solution: Input 'data' must be a one-dimensional numerical data of type'pandas.Series' taken from'pandas.DataFrame'.
+         | ValueError: The type of one-dimensional data must be 'pandas.Series', and the content is numeric data.
+         | Solution: Input 'data' must be a one-dimensional numerical data of type'pandas.Series' taken from'pandas.DataFrame'.
 
     """
     try:
@@ -334,27 +312,25 @@ def split_data(data, ratio: float):
     The first data set is the data length of the split ratio, and the second data set is the data length of the split ratio.
 
     Parameters
-    ---------
-        data: list ,ndarray, pandas.Series and pandas.DataFrame.
-        One-dimensional numerical list.
+    ------------------
+        data: list ,ndarray, pandas.Series and pandas.DataFrame. One-dimensional numerical list.
 
-        ratio: float.
-        Limitation factor: 0 < ratio <1. The split ratio is a floating point number used to determine the respective lengths of the two data sets after splitting.
+        ratio: float. Limitation factor: 0 < ratio <1. The split ratio is a floating point number used to determine the respective lengths of the two data sets after splitting.
 
     Returns
-    ---------
+    ------------------
     Two one-dimensional data sets. The first data set is the data length of the split ratio, and the second data set is the data length of the split ratio.
 
     Error
-    ---------
-        TypeError: 'data' of type 'NoneType'.
-        Solution: 'data' must be one-dimensional numerical list.
+    ------------------
+         | TypeError: 'data' of type 'NoneType'.
+         | Solution: 'data' must be one-dimensional numerical list.
 
-        ValueError: 'ratio' must be between 0 and 1, excluding 0 and 1.
-        Solution: Enter a floating point number greater than 0 and less than 1.
+         | ValueError: 'ratio' must be between 0 and 1, excluding 0 and 1.
+         | Solution: Enter a floating point number greater than 0 and less than 1.
 
-        ValueError: There are less than two numerical data in the list.
-        Solution: There are at least two numerical data in the list.
+         | ValueError: There are less than two numerical data in the list.
+         | Solution: There are at least two numerical data in the list.
 
     """
     try:
@@ -375,45 +351,46 @@ def create_ar_data(data: pandas.Series, lags: int = 1) -> pandas.DataFrame:
     """Create an autoregressive data set.
 
     The autoregressive data set created to facilitate the calculation of autoregressive, its type is'pandas.DataFrame'.
+
     For example AR(1) data set:
+     ::
+
         date　　　　　　　　t-1　　t
         2020-09-29 23:00:00  29.10  28.89
         2020-09-30 23:00:00  28.89  28.91
         2020-10-01 23:00:00  28.91  28.87
         2020-10-04 23:00:00  28.87  28.92
         2020-10-06 13:56:21  28.92  28.79
-        -------------------------------------------
-        't': Current time series data
-        't-1': Previous time series data
+        -------------------------------------------------------------------------------
+        't', Current time series data
+        't-1', Previous time series data
 
     Parameters
-    ---------
-        data: pandas.Series.
-        'data' is a one-dimensional numerical data of type 'pandas.Series' taken from 'pandas.DataFrame'.
+    ------------------
+        data: pandas.Series. data' is a one-dimensional numerical data of type 'pandas.Series' taken from 'pandas.DataFrame'.
 
-        lags: int , default =  1.
-        'lags' represents the number of lagging periods. The default value is 1, which means the data is 1 period behind.
+        lags: int , default =  1. 'lags' represents the number of lagging periods. The default value is 1, which means the data is 1 period behind.
 
     Returns
-    ---------
+    ------------------
     pandas.DataFrame. The autoregressive data set created to facilitate the calculation of autoregressive.
 
     Error
-    ---------
-        ValueError: The type of one-dimensional data must be 'pandas.Series', and the content is numeric data.
-        Solution: Check whether the parameter matches the 'ValueError' description, or use the default value.
+    ------------------
+         | ValueError: The type of one-dimensional data must be 'pandas.Series', and the content is numeric data.
+         | Solution: Check whether the parameter matches the 'ValueError' description, or use the default value.
 
-        ValueError: Check that the input list is a one-dimensional numerical data.
-        Solution: 'data' is one-dimensional data and the type is'pandas.Series', but the content is not all numeric.
+         | ValueError: Check that the input list is a one-dimensional numerical data.
+         | Solution: 'data' is one-dimensional data and the type is'pandas.Series', but the content is not all numeric.
 
-        ValueError: 'lags' value must be a positive integer, and the condition is greater than 1 and less than the length of the data.
-        Solution: Check whether the parameter matches the 'ValueError' description, or use the default value.
+         | ValueError: 'lags' value must be a positive integer, and the condition is greater than 1 and less than the length of the data.
+         | Solution: Check whether the parameter matches the 'ValueError' description, or use the default value.
 
-        TypeError: object of type 'NoneType' has no len().
-        Solution:  Please do not enter 'None'.Check that the type of one-dimensional data must be 'pandas.Series', and the content is numeric data.
+         | TypeError: object of type 'NoneType' has no len().
+         | Solution:  Please do not enter 'None'.Check that the type of one-dimensional data must be 'pandas.Series', and the content is numeric data.
 
-        KeyError: The 'data' type is'pandas.DataFrame', please enter the correct key value.
-        Solution: Use the correct key value to obtain data.
+         | KeyError: The 'data' type is'pandas.DataFrame', please enter the correct key value.
+         | Solution: Use the correct key value to obtain data.
 
     """
     try:
@@ -441,7 +418,7 @@ def create_ar_data(data: pandas.Series, lags: int = 1) -> pandas.DataFrame:
             raise ValueError("'lags' value must be a positive integer, and the condition is greater than 1 and less than the length of the data.")
     except ValueError as err:
         raise ValueError(err)
-    except KeyError:
+    except  KeyError:
         raise KeyError("The'data' type is'pandas.DataFrame', please enter the correct key value.")
 
 def n_order_difference_data(data: pandas.Series, periods: int = 1, log: bool = False) -> pandas.Series:
@@ -451,40 +428,38 @@ def n_order_difference_data(data: pandas.Series, periods: int = 1, log: bool = F
     The difference the data a second time is called the second-order difference.
 
     Parameters
-    ---------
-        data: pandas.Series.
-        'data' is a one-dimensional numerical data of type 'pandas.Series' taken from 'pandas.DataFrame'.
+    ------------------
+        data: pandas.Series. 'data' is a one-dimensional numerical data of type 'pandas.Series' taken from 'pandas.DataFrame'.
 
-        periods: int , default =  1.
-        'periods' represents the number of lagging periods. The default value is 1, which means the data is 1 period behind.
+        periods: int , default =  1. 'periods' represents the number of lagging periods. The default value is 1, which means the data is 1 period behind.
 
-        log: bool, default  = False
-        Does the data need to be multiplied by the natural logarithm.
+        log: bool, default  = False. Does the data need to be multiplied by the natural logarithm.
 
     Returns
-    ---------
+    ------------------
     pandas.Series. Return the difference data.
 
     Error
-    ---------
-        ValueError: The type of one-dimensional data must be 'pandas.Series', and the content is numeric data.
-        Solution: Check whether the parameter matches the 'ValueError' description, or use the default value.
+    ------------------
+         | ValueError: The type of one-dimensional data must be 'pandas.Series', and the content is numeric data.
+         | Solution: Check whether the parameter matches the 'ValueError' description, or use the default value.
 
-        ValueError: Check that the input list is a one-dimensional numerical data.
-        Solution: 'data' is one-dimensional data and the type is'pandas.Series', but the content is not all numeric.
+         | ValueError: Check that the input list is a one-dimensional numerical data.
+         | Solution: 'data' is one-dimensional data and the type is'pandas.Series', but the content is not all numeric.
 
-        ValueError: 'periods' value must be a positive integer, and the condition is greater than 1 and less than the length of the data.
-        Solution: Check whether the parameter matches the 'ValueError' description, or use the default value.
+         | ValueError: 'periods' value must be a positive integer, and the condition is greater than 1 and less than the length of the data.
+         | Solution: Check whether the parameter matches the 'ValueError' description, or use the default value.
 
-        TypeError: object of type 'NoneType' has no len().
-        Solution:  Please do not enter 'None'.Check that the type of one-dimensional data must be 'pandas.Series', and the content is numeric data.
+         | TypeError: object of type 'NoneType' has no len().
+         | Solution:  Please do not enter 'None'.Check that the type of one-dimensional data must be 'pandas.Series', and the content is numeric data.
 
-        KeyError: The 'data' type is'pandas.DataFrame', please enter the correct key value.
-        Solution: Use the correct key value to obtain data.
+         | KeyError: The 'data' type is'pandas.DataFrame', please enter the correct key value.
+         | Solution: Use the correct key value to obtain data.
 
     References
-    ---------
+    ------------------
     Stationarity and differencing: https://otexts.com/fpp2/stationarity.html
+    
     Time series analysis ppt: http://homepage.ntu.edu.tw/~sschen/Book/Slides/Ch2Basic.pdf
 
     """

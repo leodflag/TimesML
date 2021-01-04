@@ -5,10 +5,10 @@
 
 """
 TimeSeriesAnalysis
-=====
+====================
 
 module
----------
+------------
 Chart
     Time series data related drawing function.
 
