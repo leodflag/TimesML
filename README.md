@@ -89,6 +89,21 @@ model3.fit(data)
 # line chart to observe the average situation every five days. figure 3.
 chart.line_chart(data, model3.sma_result, chart_title='SMA(5)', file_path=save_path, xlabel='date', ylabel='population')
 ```
+## Chart example
+Describe the diagram drawn by the simple example
+#### Figure 1: chart.statistics_infographic
+![image](https://github.com/leodflag/TimesML/blob/master/US/statistics_infographic_US.png)
+    historocal trend line chart(Draw historical trend line chart with time series data.)、
+    lag plot(Scatter plot of lagging periods.)、
+    ACF chart( Autocorrelation coefficient chart.).
+
+#### Figure 2: chart.forecast_result_group_chart
+![image](https://github.com/leodflag/TimesML/blob/master/US/forecast_result_group_chart_US.png)
+    Combine and compare the prediction results of the two models.
+
+#### Figure 3: chart.line_chart
+![image](https://github.com/leodflag/TimesML/blob/master/US/SMA(5)_US_line_chart.png)
+    line chart to observe the average situation every five days.
 
 ## User Manual
 https://leodflag.github.io/TimesML_html/
