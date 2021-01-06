@@ -93,6 +93,9 @@ chart.line_chart(data, model3.sma_result, chart_title='SMA(5)', file_path=save_p
 ## User Manual
 https://leodflag.github.io/TimesML_html/
 
+## Quick Start Guide
+https://github.com/leodflag/TimesML/blob/master/TimesML_example.ipynb
+
 ## References
 
 *  Test data set : g20_new_c.csv
