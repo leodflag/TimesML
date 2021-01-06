@@ -7,9 +7,6 @@ This package was developed for time series data analysis and machine learning ta
 https://github.com/leodflag/TimesML
 
 ## TimesML (PyPI)
-https://pypi.org/project/TimesML/
-
-## PypI
 https://pypi.org/project/TimesML
 ```js
 pip install TimesML
@@ -92,6 +89,9 @@ model3.fit(data)
 # line chart to observe the average situation every five days. figure 3.
 chart.line_chart(data, model3.sma_result, chart_title='SMA(5)', file_path=save_path, xlabel='date', ylabel='population')
 ```
+
+## User Manual
+https://leodflag.github.io/TimesML_html/
 
 ## References
 
